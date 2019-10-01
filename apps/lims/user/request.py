@@ -33,7 +33,6 @@ request_post.add_argument(
     name='salutation',
     location=structure_key_item,
     store_missing=False,
-    required=False,
 )
 request_post.add_argument(
     name='mobile',
@@ -94,17 +93,17 @@ request_put.add_argument(
     location=structure_key_item,
     store_missing=False,
 )
-request_post.add_argument(
+request_put.add_argument(
     name='email',
     location=structure_key_item,
     store_missing=False,
 )
-request_post.add_argument(
+request_put.add_argument(
     name='lab_id',
     location=structure_key_item,
     store_missing=False,
 )
-request_post.add_argument(
+request_put.add_argument(
     name='dep_id',
     location=structure_key_item,
     store_missing=False,

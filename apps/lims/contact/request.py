@@ -10,9 +10,9 @@
 
 from __future__ import unicode_literals
 
-from flask_restful import reqparse, inputs
+from flask_restful import reqparse
 
-structure_key_item = 'company'
+structure_key_item = 'contact'
 
 request_parser = reqparse.RequestParser()
 request_parser.add_argument(structure_key_item, type=dict, location='json')
@@ -23,72 +23,60 @@ request_parser_item = reqparse.RequestParser(trim=True, bundle_errors=True)
 request_post = request_parser_item.copy()
 
 request_post.add_argument(
+    name='cid',
+    location=structure_key_item,
+    store_missing=False,
+    required=True,
+    help='单位必填',
+)
+request_post.add_argument(
     name='name',
     location=structure_key_item,
     store_missing=False,
     required=True,
-    help='单位名称必填',
+    help='姓名必填',
 )
 request_post.add_argument(
-    name='address',
+    name='mobile',
     location=structure_key_item,
     store_missing=False,
 )
 request_post.add_argument(
-    name='site',
+    name='email',
     location=structure_key_item,
     store_missing=False,
 )
 request_post.add_argument(
-    name='tel',
+    name='note',
     location=structure_key_item,
     store_missing=False,
-)
-request_post.add_argument(
-    name='fax',
-    location=structure_key_item,
-    store_missing=False,
-)
-request_post.add_argument(
-    name='type',
-    type=inputs.int_range(0, 2),
-    location=structure_key_item,
-    store_missing=False,
-    required=True,
-    help='单位类型必填',
 )
 
 # PUT
 request_put = request_parser_item.copy()
 
 request_put.add_argument(
+    name='cid',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
     name='name',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
-    name='address',
+    name='mobile',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
-    name='site',
+    name='email',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
-    name='tel',
-    location=structure_key_item,
-    store_missing=False,
-)
-request_put.add_argument(
-    name='fax',
-    location=structure_key_item,
-    store_missing=False,
-)
-request_put.add_argument(
-    name='type',
-    type=inputs.int_range(0, 2),
+    name='note',
     location=structure_key_item,
     store_missing=False,
 )

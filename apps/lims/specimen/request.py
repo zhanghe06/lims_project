@@ -10,9 +10,9 @@
 
 from __future__ import unicode_literals
 
-from flask_restful import reqparse, inputs
+from flask_restful import reqparse
 
-structure_key_item = 'company'
+structure_key_item = 'specimen'
 
 request_parser = reqparse.RequestParser()
 request_parser.add_argument(structure_key_item, type=dict, location='json')
@@ -27,35 +27,54 @@ request_post.add_argument(
     location=structure_key_item,
     store_missing=False,
     required=True,
-    help='单位名称必填',
+    help='样品名称必填',
 )
 request_post.add_argument(
-    name='address',
-    location=structure_key_item,
-    store_missing=False,
-)
-request_post.add_argument(
-    name='site',
-    location=structure_key_item,
-    store_missing=False,
-)
-request_post.add_argument(
-    name='tel',
-    location=structure_key_item,
-    store_missing=False,
-)
-request_post.add_argument(
-    name='fax',
-    location=structure_key_item,
-    store_missing=False,
-)
-request_post.add_argument(
-    name='type',
-    type=inputs.int_range(0, 2),
+    name='applicant_id',
     location=structure_key_item,
     store_missing=False,
     required=True,
-    help='单位类型必填',
+    help='委托申请必填',
+)
+request_post.add_argument(
+    name='grade_id',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
+    name='style',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
+    name='sku',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
+    name='brand',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
+    name='period',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
+    name='req_date',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
+    name='arr_date',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
+    name='note',
+    location=structure_key_item,
+    store_missing=False,
 )
 
 # PUT
@@ -67,28 +86,47 @@ request_put.add_argument(
     store_missing=False,
 )
 request_put.add_argument(
-    name='address',
+    name='applicant_id',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
-    name='site',
+    name='grade_id',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
-    name='tel',
+    name='style',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
-    name='fax',
+    name='sku',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
-    name='type',
-    type=inputs.int_range(0, 2),
+    name='brand',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
+    name='period',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
+    name='req_date',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
+    name='arr_date',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
+    name='note',
     location=structure_key_item,
     store_missing=False,
 )

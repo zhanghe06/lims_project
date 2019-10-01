@@ -15,12 +15,7 @@ from flask_restful import fields
 fields_item = {
     'id': fields.Integer(attribute='id'),
     'name': fields.String(attribute='name'),
-    'address': fields.String(attribute='address'),
-    'site': fields.String(attribute='site'),
-    'tel': fields.String(attribute='tel'),
-    'fax': fields.String(attribute='fax'),
-    'email': fields.String(attribute='email'),
-    'type': fields.Integer(attribute='type'),
+    'note': fields.String(attribute='note'),
     'create_time': fields.DateTime(dt_format=b'iso8601'),
     'update_time': fields.DateTime(dt_format=b'iso8601'),
 }

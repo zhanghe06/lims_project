@@ -13,8 +13,6 @@ from __future__ import unicode_literals
 from uuid import uuid4
 
 from flask import jsonify, request, g, make_response
-from flask_restful import abort
-from werkzeug import exceptions
 from werkzeug.exceptions import NotFound, InternalServerError
 
 from apps import app
@@ -41,7 +39,6 @@ def heartbeat():
 # 全局路由错误
 @app.errorhandler(NotFound.code)
 def url_not_found(error):
-    # abort(NotFound.code, message='路径错误', status=False)
     return make_response(
         jsonify(
             {

@@ -21,6 +21,8 @@ class Applicant(Base):
     receiver_uid = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
     applicant_cid = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
     detection_cid = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
+    type_detection = Column(Integer, nullable=False, server_default=text("'0'"))
+    type_test = Column(Integer, nullable=False, server_default=text("'0'"))
     note = Column(String(256), nullable=False, server_default=text("''"))
     status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
     delete_time = Column(DateTime)
@@ -56,11 +58,7 @@ class Contact(Base):
     name = Column(String(20), nullable=False, server_default=text("''"))
     salutation = Column(String(20), nullable=False, server_default=text("''"))
     mobile = Column(String(20), nullable=False, server_default=text("''"))
-    tel = Column(String(20), nullable=False, server_default=text("''"))
-    fax = Column(String(20), nullable=False, server_default=text("''"))
     email = Column(String(60), nullable=False, server_default=text("''"))
-    department = Column(String(20), nullable=False, server_default=text("''"))
-    address = Column(String(100), nullable=False, server_default=text("''"))
     note = Column(String(256), nullable=False, server_default=text("''"))
     status_default = Column(Integer, nullable=False, server_default=text("'0'"))
     status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
@@ -114,8 +112,8 @@ class Holiday(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False, server_default=text("''"))
-    note = Column(String(256), nullable=False, server_default=text("''"))
     date = Column(Date, nullable=False, server_default=text("'0000-00-00'"))
+    note = Column(String(256), nullable=False, server_default=text("''"))
     status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
     delete_time = Column(DateTime)
     create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP"))
@@ -127,6 +125,19 @@ class Laboratory(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False, server_default=text("''"))
+    note = Column(String(256), nullable=False, server_default=text("''"))
+    status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
+    delete_time = Column(DateTime)
+    create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP"))
+    update_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"))
+
+
+class LogOperation(Base):
+    __tablename__ = 'log_operation'
+
+    id = Column(Integer, primary_key=True)
+    source_id = Column(Integer, nullable=False, server_default=text("'0'"))
+    source_type = Column(Integer, nullable=False, server_default=text("'0'"))
     note = Column(String(256), nullable=False, server_default=text("''"))
     status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
     delete_time = Column(DateTime)
@@ -154,12 +165,15 @@ class Specimen(Base):
     id = Column(Integer, primary_key=True)
     code = Column(String(100), nullable=False, server_default=text("''"))
     name = Column(String(100), nullable=False, server_default=text("''"))
-    applicant_id = Column(Integer, nullable=False, server_default=text("'0'"))
-    note = Column(String(256), nullable=False, server_default=text("''"))
+    applicant_id = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
     grade_id = Column(Integer, nullable=False, server_default=text("'0'"))
+    style = Column(String(100), nullable=False, server_default=text("''"))
+    sku = Column(String(100), nullable=False, server_default=text("''"))
+    brand = Column(String(100), nullable=False, server_default=text("''"))
     period = Column(Integer, nullable=False, server_default=text("'0'"))
     req_date = Column(Date, nullable=False, server_default=text("'0000-00-00'"))
     arr_date = Column(Date, nullable=False, server_default=text("'0000-00-00'"))
+    note = Column(String(256), nullable=False, server_default=text("''"))
     status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
     delete_time = Column(DateTime)
     create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP"))
@@ -195,9 +209,13 @@ class Standard(Base):
 
 class User(Base):
     __tablename__ = 'user'
+    __table_args__ = (
+        Index('name', 'name', 'lab_id', 'dep_id', unique=True),
+        Index('lab_id', 'lab_id', 'dep_id')
+    )
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(20, u'utf8mb4_bin'), nullable=False, unique=True, server_default=text("''"))
+    name = Column(String(20, u'utf8mb4_bin'), nullable=False, server_default=text("''"))
     salutation = Column(String(20), nullable=False, server_default=text("''"))
     mobile = Column(String(20), nullable=False, server_default=text("''"))
     tel = Column(String(20), nullable=False, server_default=text("''"))

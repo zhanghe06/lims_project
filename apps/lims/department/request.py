@@ -10,9 +10,9 @@
 
 from __future__ import unicode_literals
 
-from flask_restful import reqparse, inputs
+from flask_restful import reqparse
 
-structure_key_item = 'company'
+structure_key_item = 'department'
 
 request_parser = reqparse.RequestParser()
 request_parser.add_argument(structure_key_item, type=dict, location='json')
@@ -27,35 +27,19 @@ request_post.add_argument(
     location=structure_key_item,
     store_missing=False,
     required=True,
-    help='单位名称必填',
+    help='名称必填',
 )
 request_post.add_argument(
-    name='address',
-    location=structure_key_item,
-    store_missing=False,
-)
-request_post.add_argument(
-    name='site',
-    location=structure_key_item,
-    store_missing=False,
-)
-request_post.add_argument(
-    name='tel',
-    location=structure_key_item,
-    store_missing=False,
-)
-request_post.add_argument(
-    name='fax',
-    location=structure_key_item,
-    store_missing=False,
-)
-request_post.add_argument(
-    name='type',
-    type=inputs.int_range(0, 2),
+    name='lab_id',
     location=structure_key_item,
     store_missing=False,
     required=True,
-    help='单位类型必填',
+    help='实验室必填',
+)
+request_post.add_argument(
+    name='note',
+    location=structure_key_item,
+    store_missing=False,
 )
 
 # PUT
@@ -67,28 +51,12 @@ request_put.add_argument(
     store_missing=False,
 )
 request_put.add_argument(
-    name='address',
+    name='lab_id',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
-    name='site',
-    location=structure_key_item,
-    store_missing=False,
-)
-request_put.add_argument(
-    name='tel',
-    location=structure_key_item,
-    store_missing=False,
-)
-request_put.add_argument(
-    name='fax',
-    location=structure_key_item,
-    store_missing=False,
-)
-request_put.add_argument(
-    name='type',
-    type=inputs.int_range(0, 2),
+    name='note',
     location=structure_key_item,
     store_missing=False,
 )

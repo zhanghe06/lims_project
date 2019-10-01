@@ -13,7 +13,7 @@ from __future__ import unicode_literals
 from flask_restful import fields
 
 fields_item = {
-    'id': fields.String(attribute='id'),
+    'id': fields.Integer(attribute='id'),
     'name': fields.String(attribute='name'),
     'salutation': fields.String(attribute='salutation'),
     'mobile': fields.String(attribute='mobile'),
