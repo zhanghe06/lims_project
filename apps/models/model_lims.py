@@ -1,7 +1,7 @@
 # coding: utf-8
 from sqlalchemy import Column, Date, DateTime, Index, Integer, String, text
-
 from apps.databases.db_lims import db_lims
+
 
 Base = db_lims.Model
 metadata = Base.metadata
@@ -9,7 +9,6 @@ metadata = Base.metadata
 
 def to_dict(self):
     return {c.name: getattr(self, c.name, None) for c in self.__table__.columns}
-
 
 Base.to_dict = to_dict
 Base.__bind_key__ = 'db_lims'
@@ -64,23 +63,6 @@ class Contact(Base):
     address = Column(String(100), nullable=False, server_default=text("''"))
     note = Column(String(256), nullable=False, server_default=text("''"))
     status_default = Column(Integer, nullable=False, server_default=text("'0'"))
-    status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
-    delete_time = Column(DateTime)
-    create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP"))
-    update_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"))
-
-
-class Customer(Base):
-    __tablename__ = 'customer'
-
-    id = Column(Integer, primary_key=True)
-    company_name = Column(String(100), nullable=False, server_default=text("''"))
-    company_address = Column(String(100), nullable=False, server_default=text("''"))
-    company_site = Column(String(100), nullable=False, server_default=text("''"))
-    company_tel = Column(String(100), nullable=False, server_default=text("''"))
-    company_fax = Column(String(100), nullable=False, server_default=text("''"))
-    company_email = Column(String(100), nullable=False, server_default=text("''"))
-    company_type = Column(Integer, nullable=False, server_default=text("'0'"))
     status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
     delete_time = Column(DateTime)
     create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP"))

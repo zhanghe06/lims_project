@@ -36,7 +36,7 @@ pip install supervisor
 1. DEBUG = True     indent=2
 2. DEBUG = False    indent=4
 
-动作 - 成功
+动作 - 成功（200）
 ```
 # 创建
 {
@@ -58,7 +58,7 @@ pip install supervisor
 }
 ```
 
-动作 - 失败
+动作 - 失败（400）
 ```
 {
     "message": "更新失败",
@@ -66,7 +66,7 @@ pip install supervisor
 }
 ```
 
-查询 - 成功
+查询 - 成功（200）
 ```
 # 详情
 {
@@ -84,9 +84,9 @@ pip install supervisor
     }
 }
 
-# 列表
+# 列表 - 有记录
 {
-    "customers": [
+    "customer": [
         {
             "company_address": "company address",
             "company_email": "",
@@ -114,49 +114,55 @@ pip install supervisor
     ],
     "total": 7
 }
-```
 
-查询 - 失败
-```
+# 列表 - 空记录
 {
-    "message": "Resource not found.",
-    "result": false,
-    "status": 404
+    "customer": [],
+    "total": 0
 }
 ```
 
-请求 - 失败
+查询 - 失败（404）
 ```
 {
-    "message": "Bad request.",
-    "result": false,
-    "status": 400
+    "message": "没有记录",
+    "result": false
+}
+
+{
+    "message": "已经删除",
+    "result": false
 }
 ```
 
-路由错误
+查询 - 失败（400）
 ```
 {
-    "message": "URL not found.",
-    "result": false,
-    "status": 404
+    "message": "参数错误",
+    "result": false
 }
 ```
 
-权限拒绝
+路径错误（404）
 ```
 {
-    "message": "Token required.",
-    "result": false,
-    "status": 403
+    "message": "路径错误",
+    "result": false
 }
 ```
 
-服务错误
+权限拒绝（403）
 ```
 {
-    "message": "Internal server error.",
-    "result": false,
-    "status": 500
+    "message": "权限拒绝",
+    "result": false
+}
+```
+
+服务错误（500）
+```
+{
+    "message": "内部错误",
+    "result": false
 }
 ```

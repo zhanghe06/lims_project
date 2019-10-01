@@ -9,23 +9,23 @@
 """
 
 from apps.lims.apis import api_lims
-from apps.lims.company.resource import (
-    CompanyResource,
-    CompaniesResource,
+from apps.lims.user.resource import (
+    UserResource,
+    UsersResource,
 )
 
 # 详情、修改、删除
 api_lims.add_resource(
-    CompanyResource,
-    '/company/<int:pk>',
-    endpoint='company',
+    UserResource,
+    '/user/<int:pk>',
+    endpoint='user',
     strict_slashes=False
 )
 
 # 创建、列表
 api_lims.add_resource(
-    CompaniesResource,
-    '/company',
-    endpoint='companies',
+    UsersResource,
+    '/user',
+    endpoint='users',
     strict_slashes=False
 )

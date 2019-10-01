@@ -1,8 +1,8 @@
 --
--- Current Database: `migration_project`
+-- Current Database: `lims_project`
 --
 
--- DROP DATABASE IF EXISTS `migration_project`;
+-- DROP DATABASE IF EXISTS `lims_project`;
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `lims_project` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 
@@ -25,7 +25,8 @@ CREATE TABLE `user` (
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE (`name`)
+  UNIQUE (`name`, `lab_id`, `dep_id`),
+  KEY (`lab_id`, `dep_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户全局注册表';
 
 
@@ -151,8 +152,10 @@ CREATE TABLE `applicant` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `receiver_uid` INT NOT NULL DEFAULT 0 COMMENT '受理人ID',
   `applicant_cid` INT NOT NULL DEFAULT 0 COMMENT '委托公司ID',
-  `detection_cid` INT NOT NULL DEFAULT 0 COMMENT '检测公司ID',
+  `detection_cid` INT NOT NULL DEFAULT 0 COMMENT '受检公司ID',
   `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '备注',
+  `type_detection` TINYINT NOT NULL DEFAULT 0 COMMENT '检测类型（1:抽检,2:自测）',
+  `type_test` TINYINT NOT NULL DEFAULT 0 COMMENT '测试类型（1:产品标准,2:方法测试）',
   `status_delete` TINYINT NOT NULL DEFAULT 0 COMMENT '删除状态（0:未删除,1:已删除）',
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -161,7 +164,7 @@ CREATE TABLE `applicant` (
   KEY (`receiver_uid`),
   KEY (`applicant_cid`),
   KEY (`detection_cid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='申请表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='委托申请表';
 
 
 DROP TABLE IF EXISTS `specimen`;
@@ -172,6 +175,9 @@ CREATE TABLE `specimen` (
   `applicant_id` INT NOT NULL DEFAULT 0 COMMENT '申请ID',
   `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '备注',
   `grade_id` TINYINT NOT NULL DEFAULT 0 COMMENT '样品等级（1:A级,2:B级,3:C级,4:D级）',
+  `style` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '款号',
+  `sku` VARCHAR(100) NOT NULL DEFAULT '' COMMENT 'SKU',
+  `brand` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '商标',
   `period` INT NOT NULL DEFAULT 0 COMMENT '检测周期（工作日）',
   `req_date` DATE NOT NULL DEFAULT '0000-00-00' COMMENT '要求完成日期',
   `arr_date` DATE NOT NULL DEFAULT '0000-00-00' COMMENT '样品到达日期',
@@ -180,7 +186,8 @@ CREATE TABLE `specimen` (
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY (`applicant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='样品表';
 
 
@@ -242,3 +249,17 @@ CREATE TABLE `manner` (
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='方法表';
+
+
+DROP TABLE IF EXISTS `log_operation`;
+CREATE TABLE `log_operation` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `source_id` INT NOT NULL DEFAULT 0 COMMENT '来源ID',
+  `source_type` INT NOT NULL DEFAULT 0 COMMENT '来源类型（1:受理,2:样品,3:测试,4:报告）',
+  `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '备注',
+  `status_delete` TINYINT NOT NULL DEFAULT 0 COMMENT '删除状态（0:未删除,1:已删除）',
+  `delete_time` TIMESTAMP NULL COMMENT '删除时间',
+  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';

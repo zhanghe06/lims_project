@@ -8,12 +8,11 @@
 @time: 2019-09-27 12:47
 """
 
-
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import os
 import binascii
+import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -21,6 +20,10 @@ HOST = '0.0.0.0'
 PORT = 8000
 DEBUG = False
 SECRET_KEY = 'c9a6b2eb758aab3e1899576e76d72550cb3dd6d7a4b56b66'
+
+# 意外异常捕获
+PROPAGATE_EXCEPTIONS = True
+PRESERVE_CONTEXT_ON_EXCEPTION = True
 
 TOKEN_TTL = 600
 
@@ -82,7 +85,6 @@ ENDPOINT = 'http://%s:%s' % (HOST, PORT)
 # 页码默认配置
 DEFAULT_PAGE = 1
 DEFAULT_SITE = 20
-
 
 if __name__ == '__main__':
     sk = os.urandom(24)

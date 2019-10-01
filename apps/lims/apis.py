@@ -13,4 +13,5 @@ from flask_restful import Api
 from apps.commons.exceptions import errors
 from apps.lims.blueprints import bp_lims
 
-api_lims = Api(bp_lims, errors=errors)
+# api_lims = Api(bp_lims, errors=errors)
+api_lims = Api(bp_lims)

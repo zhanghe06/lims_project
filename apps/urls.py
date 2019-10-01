@@ -8,10 +8,14 @@
 @time: 2019-09-27 15:14
 """
 
+from __future__ import unicode_literals
+
 from uuid import uuid4
 
 from flask import jsonify, request, g, make_response
+from flask_restful import abort
 from werkzeug import exceptions
+from werkzeug.exceptions import NotFound, InternalServerError
 
 from apps import app
 
@@ -35,17 +39,18 @@ def heartbeat():
 
 
 # 全局路由错误
-@app.errorhandler(exceptions.NotFound.code)
-def not_found(error):
+@app.errorhandler(NotFound.code)
+def url_not_found(error):
+    # abort(NotFound.code, message='路径错误', status=False)
     return make_response(
         jsonify(
             {
-                'message': 'URL not found.' or error.description,
+                'message': '路径错误' or error.description,
                 'result': False,
-                'status': exceptions.NotFound.code,
+                # 'status': exceptions.NotFound.code,
             }
         ),
-        exceptions.NotFound.code
+        NotFound.code
     )
 
 
@@ -55,24 +60,10 @@ def exception(error):
     return make_response(
         jsonify(
             {
-                'message': error.message or exceptions.InternalServerError.description,
+                'message': error.message or InternalServerError.description,
                 'result': False,
-                'status': exceptions.InternalServerError.code,
+                # 'status': InternalServerError.code,
             }
         ),
-        exceptions.InternalServerError.code
+        InternalServerError.code
     )
-
-# 全局内部错误
-# @app.errorhandler(500)
-# def exception(error):
-#     return make_response(
-#         jsonify(
-#             {
-#                 'message': 'Internal server error.' or error.description,
-#                 'result': False,
-#                 'status': exceptions.InternalServerError.code,
-#             }
-#         ),
-#         exceptions.InternalServerError.code
-#     )

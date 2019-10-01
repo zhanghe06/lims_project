@@ -25,3 +25,4 @@ app.register_blueprint(bp_lims)
 # Add Resource Urls
 from apps import urls
 from apps.lims.company import url
+from apps.lims.user import url

@@ -15,20 +15,20 @@ from flask_restful import Resource, marshal, reqparse, abort
 from werkzeug.exceptions import NotFound, BadRequest
 
 from apps import app
-from apps.lims.company.api import (
-    get_company_row_by_id,
-    delete_company,
-    get_company_pagination,
-    add_company,
-    edit_company,
+from apps.lims.user.api import (
+    get_user_row_by_id,
+    delete_user,
+    get_user_pagination,
+    add_user,
+    edit_user,
 )
-from apps.lims.company.request import (
+from apps.lims.user.request import (
     structure_key_item,
     request_parser,
     request_post,
     request_put,
 )
-from apps.lims.company.response import fields_item
+from apps.lims.user.response import fields_item
 from apps.maps.status_delete import STATUS_DEL_OK, STATUS_DEL_NO
 
 DEFAULT_PAGE = app.config['DEFAULT_PAGE']
@@ -38,9 +38,9 @@ SUCCESS_MSG = app.config['SUCCESS_MSG']
 FAILURE_MSG = app.config['FAILURE_MSG']
 
 
-class CompanyResource(Resource):
+class UserResource(Resource):
     """
-    CompanyResource
+    UserResource
     """
     decorators = [
         # token_auth.login_required,
@@ -49,11 +49,11 @@ class CompanyResource(Resource):
     def get(self, pk):
         """
         Example:
-            curl http://0.0.0.0:8000/company/1
+            curl http://0.0.0.0:8000/user/1
         :param pk:
         :return:
         """
-        data = get_company_row_by_id(pk)
+        data = get_user_row_by_id(pk)
 
         if not data:
             abort(NotFound.code, message='没有记录', status=False)
@@ -66,10 +66,10 @@ class CompanyResource(Resource):
     def put(self, pk):
         """
         Example:
-            curl http://0.0.0.0:8000/company/1 -H "Content-Type: application/json" -X PUT -d '
+            curl http://0.0.0.0:8000/user/1 -H "Content-Type: application/json" -X PUT -d '
             {
-                "company": {
-                    "name": "company name put"
+                "user": {
+                    "name": "user name put"
                 }
             }'
         :param pk:
@@ -82,7 +82,7 @@ class CompanyResource(Resource):
             abort(BadRequest.code, message='参数错误', status=False)
 
         # 是否存在
-        data = get_company_row_by_id(pk)
+        data = get_user_row_by_id(pk)
 
         if not data:
             abort(NotFound.code, message='没有记录', status=False)
@@ -91,10 +91,10 @@ class CompanyResource(Resource):
 
         # 更新数据
         request_data = request_item_args
-        result = edit_company(pk, request_data)
+        result = edit_user(pk, request_data)
 
         if not result:
-            abort(BadRequest.code, message='更新失败', status=False)
+            abort(NotFound.code, message='更新失败', status=False)
 
         success_msg = SUCCESS_MSG.copy()
         success_msg['message'] = '更新成功'
@@ -103,12 +103,12 @@ class CompanyResource(Resource):
     def delete(self, pk):
         """
         Example:
-            curl http://0.0.0.0:8000/company/1 -X DELETE
+            curl http://0.0.0.0:8000/user/1 -X DELETE
         :param pk:
         :return:
         """
         # 是否存在
-        data = get_company_row_by_id(pk)
+        data = get_user_row_by_id(pk)
 
         if not data:
             abort(NotFound.code, message='没有记录', status=False)
@@ -116,7 +116,7 @@ class CompanyResource(Resource):
             abort(NotFound.code, message='已经删除', status=False)
 
         # 删除数据
-        result = delete_company(pk)
+        result = delete_user(pk)
 
         if not result:
             abort(BadRequest.code, message='删除失败', status=False)
@@ -126,9 +126,9 @@ class CompanyResource(Resource):
         return make_response(jsonify(success_msg), 200)
 
 
-class CompaniesResource(Resource):
+class UsersResource(Resource):
     """
-    CompaniesResource
+    UsersResource
     """
     decorators = [
         # token_auth.login_required,
@@ -137,8 +137,8 @@ class CompaniesResource(Resource):
     def get(self):
         """
         Example:
-            curl http://0.0.0.0:8000/company
-            curl http://0.0.0.0:8000/company?page=1&size=20
+            curl http://0.0.0.0:8000/user
+            curl http://0.0.0.0:8000/user?page=1&size=20
         :return:
         """
         # 条件参数
@@ -150,7 +150,7 @@ class CompaniesResource(Resource):
         if not filter_parser_args:
             abort(BadRequest.code, message='参数错误', status=False)
 
-        pagination_obj = get_company_pagination(
+        pagination_obj = get_user_pagination(
             status_delete=STATUS_DEL_NO,
             **filter_parser_args
         )
@@ -162,15 +162,15 @@ class CompaniesResource(Resource):
     def post(self):
         """
         Example:
-            curl http://0.0.0.0:8000/company -H "Content-Type: application/json" -X POST -d '
+            curl http://0.0.0.0:8000/user -H "Content-Type: application/json" -X POST -d '
             {
-                "company": {
-                    "name": "company name",
-                    "address": "company address",
-                    "site": "http://www.baidu.com",
+                "user": {
+                    "name": "tom",
+                    "salutation": "先生",
+                    "mobile": "http://www.baidu.com",
                     "tel": "021-62345678",
                     "fax": "021-62345678",
-                    "type": 1
+                    "email": "haha@haha.com"
                 }
             }'
         :return:
@@ -182,7 +182,7 @@ class CompaniesResource(Resource):
             abort(BadRequest.code, message='参数错误', status=False)
 
         request_data = request_item_args
-        result = add_company(request_data)
+        result = add_user(request_data)
 
         if not result:
             abort(BadRequest.code, message='创建失败', status=False)
