@@ -187,8 +187,8 @@ CREATE TABLE `specimen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='样品表';
 
 
-DROP TABLE IF EXISTS `specimen_items`;
-CREATE TABLE `specimen_items` (
+DROP TABLE IF EXISTS `specimen_item`;
+CREATE TABLE `specimen_item` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `code` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '子样编号',
   `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '子样名称',

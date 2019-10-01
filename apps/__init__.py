@@ -30,4 +30,5 @@ from apps.lims.contact import url
 from apps.lims.department import url
 from apps.lims.laboratory import url
 from apps.lims.specimen import url
+from apps.lims.specimen_item import url
 from apps.lims.user import url

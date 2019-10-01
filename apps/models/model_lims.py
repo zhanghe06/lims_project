@@ -180,6 +180,20 @@ class Specimen(Base):
     update_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"))
 
 
+class SpecimenItem(Base):
+    __tablename__ = 'specimen_item'
+
+    id = Column(Integer, primary_key=True)
+    code = Column(String(100), nullable=False, server_default=text("''"))
+    name = Column(String(100), nullable=False, server_default=text("''"))
+    specimen_id = Column(Integer, nullable=False, server_default=text("'0'"))
+    note = Column(String(256), nullable=False, server_default=text("''"))
+    status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
+    delete_time = Column(DateTime)
+    create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP"))
+    update_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"))
+
+
 class SpecimenItems(Base):
     __tablename__ = 'specimen_items'
 
