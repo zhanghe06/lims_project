@@ -63,7 +63,7 @@ REDIS = {
 REDIS_URL = 'redis://:%s@%s' % (REDIS['password'], REDIS['host']) \
     if REDIS.get('password') else 'redis://%s' % REDIS['host']
 
-REDIS_PREFIX = 'erp'
+REDIS_PREFIX = 'lims'
 
 SUCCESS_MSG = {
     'result': True,
