@@ -1,0 +1,2545 @@
+{
+	"info": {
+		"_postman_id": "8f33b01a-5ab5-4494-9988-e50b663de17c",
+		"name": "lims_project",
+		"description": "实验室信息管理系统(Laboratory Information Management System)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "委托[application]",
+			"item": [
+				{
+					"name": "列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/applicant?page=1&size=2",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"applicant"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"applicant\": {\n        \"receiver_uid\": 0,\n        \"applicant_cid\": 1,\n        \"detection_cid\": 2,\n        \"note\": \"hello\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/applicant",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"applicant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"applicant\": {\n        \"note\": \"hello world\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/applicant/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"applicant",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/applicant/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"applicant",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/applicant/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"applicant",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "目标",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "单位[company]",
+			"item": [
+				{
+					"name": "列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/company?page=1&size=2",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"company"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"company\": {\n        \"name\": \"company name 3\",\n        \"address\": \"company address\",\n        \"site\": \"http://www.baidu.com\",\n        \"tel\": \"021-62345678\",\n        \"fax\": \"021-62345678\",\n        \"type\": 1\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/company",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"company\": {\n        \"name\": \"company name put\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/company/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"company",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/company/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"company",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/company/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"company",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "目标",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "联系人[contact]",
+			"item": [
+				{
+					"name": "列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/contact?page=1&size=2",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"contact"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"contact\": {\n    \t\"cid\": 1,\n        \"name\": \"a\",\n        \"note\": \"hello\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/contact",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"contact\": {\n        \"note\": \"hello world\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/contact/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"contact",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/contact/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"contact",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/contact/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"contact",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "目标",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "部门[department]",
+			"item": [
+				{
+					"name": "列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/department?page=1&size=2",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"department"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"department\": {\n        \"name\": \"a\",\n        \"lab_id\": 1,\n        \"note\": \"hello\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/department",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"department"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"department\": {\n        \"note\": \"hello world\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/department/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"department",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/department/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"department",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/department/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"department",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "目标",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "测试[detection]",
+			"item": [
+				{
+					"name": "列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/detection?page=1&size=2",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"detection"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"detection\": {\n        \"name\": \"a\",\n        \"specimen_item_id\": 1,\n        \"manner_id\": 1,\n        \"note\": \"hello\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/detection",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"detection"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"detection\": {\n        \"note\": \"hello world\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/detection/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"detection",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/detection/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"detection",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/detection/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"detection",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "目标",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "等级[grade]",
+			"item": [
+				{
+					"name": "列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/grade?page=1&size=2",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"grade"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"grade\": {\n        \"name\": \"a\",\n        \"note\": \"hello\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/grade",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"grade\": {\n        \"note\": \"hello world\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/grade/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"grade",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/grade/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"grade",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/grade/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"grade",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "目标",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "假期[holiday]",
+			"item": [
+				{
+					"name": "列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/holiday?page=1&size=2",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"holiday"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"holiday\": {\n        \"name\": \"a\",\n        \"date\": \"2019-01-01\",\n        \"note\": \"hello\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/holiday",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"holiday"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"holiday\": {\n        \"note\": \"hello world\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/holiday/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"holiday",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/holiday/2",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"holiday",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/holiday/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"holiday",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "目标",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "实验室[laboratory]",
+			"item": [
+				{
+					"name": "列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/laboratory?page=1&size=2",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"laboratory"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"laboratory\": {\n        \"name\": \"a\",\n        \"note\": \"hello\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/laboratory",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"laboratory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"laboratory\": {\n        \"note\": \"hello world\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/laboratory/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"laboratory",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/laboratory/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"laboratory",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/laboratory/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"laboratory",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "目标",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "样品[specimen]",
+			"item": [
+				{
+					"name": "列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/specimen?page=1&size=2",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"specimen"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"specimen\": {\n        \"name\": \"specimen name 3\",\n        \"applicant_id\": 1,\n        \"grade_id\": 1,\n        \"style\": \"新款\",\n        \"sku\": \"货号\",\n        \"brand\": \"品牌\",\n        \"period\": 7,\n        \"req_date\": \"2019-01-01\",\n        \"arr_date\": \"2019-01-07\",\n        \"note\": \"\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/specimen",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"specimen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"specimen\": {\n        \"name\": \"lily\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/specimen/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"specimen",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/specimen/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"specimen",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/specimen/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"specimen",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "目标",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "子样[specimen_item]",
+			"item": [
+				{
+					"name": "列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/specimen_item?page=1&size=2",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"specimen_item"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"specimen_item\": {\n        \"name\": \"specimen item 3\",\n        \"specimen_id\": 1,\n        \"note\": \"\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/specimen_item",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"specimen_item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"specimen_item\": {\n        \"name\": \"lily\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/specimen_item/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"specimen_item",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/specimen_item/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"specimen_item",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/specimen_item/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"specimen_item",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "目标",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "标准[standard]",
+			"item": [
+				{
+					"name": "列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/standard?page=1&size=2",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"standard"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"standard\": {\n        \"name\": \"GB-2019\",\n        \"note\": \"\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/standard",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"standard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"standard\": {\n        \"name\": \"lily\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/standard/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"standard",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/standard/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"standard",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/standard/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"standard",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "目标",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "方法[manner]",
+			"item": [
+				{
+					"name": "列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/manner?page=1&size=2",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"manner"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"manner\": {\n        \"name\": \"GB-2019\",\n        \"note\": \"\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/manner",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"manner"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"manner\": {\n        \"name\": \"lily\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/manner/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"manner",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/manner/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"manner",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/manner/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"manner",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "目标",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "用户[user]",
+			"item": [
+				{
+					"name": "列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/user?page=1&size=2",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"company\": {\n        \"name\": \"company name 3\",\n        \"address\": \"company address\",\n        \"site\": \"http://www.baidu.com\",\n        \"tel\": \"021-62345678\",\n        \"fax\": \"021-62345678\",\n        \"type\": 1\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/user",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user\": {\n        \"name\": \"lily\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/user/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/user/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/user/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "目标",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8e7afb15-6f77-4cd1-b880-eb4dc19c4716",
+						"exec": [
+							"pm.test(\"test_set_token_env\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"token\", jsonData.token);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "username",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{endpoint}}/tokens",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"tokens"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "心跳检测",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d67f16e8-1bfa-437c-9713-5c250ff0a858",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "OPTIONS",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{endpoint}}",
+					"host": [
+						"{{endpoint}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "fd8bd507-0529-49f2-8d58-84480ba696a5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "da1b6616-a62c-4ccb-abe2-ff7f82c439dc",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

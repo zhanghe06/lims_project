@@ -32,6 +32,10 @@ pip install supervisor
 
 ## 接口定义
 
+postman接口文件 [lims_project.postman_collection.json](lims_project.postman_collection.json)
+
+![lims project postman png](https://github.com/zhanghe06/lims_project/raw/master/images/lims_project_postman.png)
+
 注意调试模式影响缩进
 1. DEBUG = True     indent=2
 2. DEBUG = False    indent=4
