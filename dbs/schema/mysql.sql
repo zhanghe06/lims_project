@@ -225,6 +225,7 @@ CREATE TABLE `detection` (
   `code` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '检测编号',
   `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '检测名称',
   `specimen_item_id` INT NOT NULL DEFAULT 0 COMMENT '子样ID',
+  `standard_id` INT NOT NULL DEFAULT 0 COMMENT '标准ID',
   `manner_id` INT NOT NULL DEFAULT 0 COMMENT '方法ID',
   `applicant_id` INT NOT NULL DEFAULT 0 COMMENT '申请ID（冗余）',
   `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '备注',

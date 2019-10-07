@@ -110,6 +110,7 @@ class Detection(Base):
     code = Column(String(100), nullable=False, server_default=text("''"))
     name = Column(String(100), nullable=False, server_default=text("''"))
     specimen_item_id = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
+    standard_id = Column(Integer, nullable=False, server_default=text("'0'"))
     manner_id = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
     applicant_id = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
     note = Column(String(256), nullable=False, server_default=text("''"))

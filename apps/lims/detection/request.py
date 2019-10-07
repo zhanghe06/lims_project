@@ -35,6 +35,11 @@ request_post.add_argument(
     help='子样必填',
 )
 request_post.add_argument(
+    name='standard_id',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
     name='manner_id',
     location=structure_key_item,
     store_missing=False,
@@ -57,6 +62,11 @@ request_put.add_argument(
 )
 request_put.add_argument(
     name='specimen_item_id',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
+    name='standard_id',
     location=structure_key_item,
     store_missing=False,
 )

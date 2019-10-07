@@ -17,6 +17,7 @@ fields_item = {
     'code': fields.String(attribute='code'),
     'name': fields.String(attribute='name'),
     'specimen_item_id': fields.Integer(attribute='specimen_item_id'),
+    'standard_id': fields.Integer(attribute='standard_id'),
     'manner_id': fields.Integer(attribute='manner_id'),
     'applicant_id': fields.Integer(attribute='applicant_id'),
     'note': fields.String(attribute='note'),
