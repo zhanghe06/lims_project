@@ -14,6 +14,19 @@ Base.to_dict = to_dict
 Base.__bind_key__ = 'db_lims'
 
 
+class Analyze(Base):
+    __tablename__ = 'analyze'
+
+    id = Column(Integer, primary_key=True)
+    manner_id = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
+    property = Column(String(100), nullable=False, server_default=text("''"))
+    sort_code = Column(Integer, nullable=False, server_default=text("'0'"))
+    status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
+    delete_time = Column(DateTime)
+    create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP"))
+    update_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"))
+
+
 class Applicant(Base):
     __tablename__ = 'applicant'
 

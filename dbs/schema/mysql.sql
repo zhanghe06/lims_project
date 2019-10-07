@@ -259,6 +259,7 @@ CREATE TABLE `manner` (
   `code` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '方法编号',
   `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '方法名称',
   `standard_id` INT NOT NULL DEFAULT 0 COMMENT '标准ID',
+  `condition` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '条件',
   `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '备注',
   `status_delete` TINYINT NOT NULL DEFAULT 0 COMMENT '删除状态（0:未删除,1:已删除）',
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
@@ -267,6 +268,21 @@ CREATE TABLE `manner` (
   PRIMARY KEY (`id`),
   KEY (`standard_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='方法表';
+
+
+DROP TABLE IF EXISTS `analyze`;
+CREATE TABLE `analyze` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `manner_id` INT NOT NULL DEFAULT 0 COMMENT '方法ID',
+  `property` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '属性',
+  `sort_code` TINYINT NOT NULL DEFAULT 0 COMMENT '排序编码',
+  `status_delete` TINYINT NOT NULL DEFAULT 0 COMMENT '删除状态（0:未删除,1:已删除）',
+  `delete_time` TIMESTAMP NULL COMMENT '删除时间',
+  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY (`manner_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='分析表';
 
 
 DROP TABLE IF EXISTS `log_operation`;

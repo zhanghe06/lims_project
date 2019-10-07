@@ -15,21 +15,21 @@ from flask_restful import Resource, marshal, reqparse, abort
 from werkzeug.exceptions import NotFound, BadRequest
 
 from apps import app
-from apps.lims.applicant.api import (
-    get_applicant_row_by_id,
-    delete_applicant,
-    get_applicant_pagination,
-    add_applicant,
-    edit_applicant,
+from apps.lims.analyze.api import (
+    get_analyze_row_by_id,
+    delete_analyze,
+    get_analyze_pagination,
+    add_analyze,
+    edit_analyze,
 )
-from apps.lims.applicant.request import (
+from apps.lims.analyze.request import (
     structure_key_item,
     request_parser,
     request_post,
     request_put,
     request_delete,
 )
-from apps.lims.applicant.response import fields_item
+from apps.lims.analyze.response import fields_item
 from apps.maps.status_delete import STATUS_DEL_OK, STATUS_DEL_NO
 
 DEFAULT_PAGE = app.config['DEFAULT_PAGE']
@@ -39,9 +39,9 @@ SUCCESS_MSG = app.config['SUCCESS_MSG']
 FAILURE_MSG = app.config['FAILURE_MSG']
 
 
-class ApplicantResource(Resource):
+class AnalyzeResource(Resource):
     """
-    ApplicantResource
+    AnalyzeResource
     """
     decorators = [
         # token_auth.login_required,
@@ -50,11 +50,11 @@ class ApplicantResource(Resource):
     def get(self, pk):
         """
         Example:
-            curl http://0.0.0.0:8000/applicant/1
+            curl http://0.0.0.0:8000/analyze/1
         :param pk:
         :return:
         """
-        data = get_applicant_row_by_id(pk)
+        data = get_analyze_row_by_id(pk)
 
         if not data:
             abort(NotFound.code, message='没有记录', status=False)
@@ -67,10 +67,10 @@ class ApplicantResource(Resource):
     def put(self, pk):
         """
         Example:
-            curl http://0.0.0.0:8000/applicant/1 -H "Content-Type: application/json" -X PUT -d '
+            curl http://0.0.0.0:8000/analyze/1 -H "Content-Type: application/json" -X PUT -d '
             {
-                "applicant": {
-                    "name": "applicant name put"
+                "analyze": {
+                    "name": "analyze name put"
                 }
             }'
         :param pk:
@@ -83,7 +83,7 @@ class ApplicantResource(Resource):
             abort(BadRequest.code, message='参数错误', status=False)
 
         # 是否存在
-        data = get_applicant_row_by_id(pk)
+        data = get_analyze_row_by_id(pk)
 
         if not data:
             abort(NotFound.code, message='没有记录', status=False)
@@ -92,7 +92,7 @@ class ApplicantResource(Resource):
 
         # 更新数据
         request_data = request_item_args
-        result = edit_applicant(pk, request_data)
+        result = edit_analyze(pk, request_data)
 
         if not result:
             abort(NotFound.code, message='更新失败', status=False)
@@ -101,35 +101,35 @@ class ApplicantResource(Resource):
         success_msg['message'] = '更新成功'
         return make_response(jsonify(success_msg), 200)
 
-    def delete(self, pk):
-        """
-        Example:
-            curl http://0.0.0.0:8000/applicant/1 -X DELETE
-        :param pk:
-        :return:
-        """
-        # 是否存在
-        data = get_applicant_row_by_id(pk)
+    # def delete(self, pk):
+    #     """
+    #     Example:
+    #         curl http://0.0.0.0:8000/analyze/1 -X DELETE
+    #     :param pk:
+    #     :return:
+    #     """
+    #     # 是否存在
+    #     data = get_analyze_row_by_id(pk)
+    #
+    #     if not data:
+    #         abort(NotFound.code, message='没有记录', status=False)
+    #     if data.status_delete == STATUS_DEL_OK:
+    #         abort(NotFound.code, message='已经删除', status=False)
+    #
+    #     # 删除数据
+    #     result = delete_analyze(pk)
+    #
+    #     if not result:
+    #         abort(BadRequest.code, message='删除失败', status=False)
+    #
+    #     success_msg = SUCCESS_MSG.copy()
+    #     success_msg['message'] = '删除成功'
+    #     return make_response(jsonify(success_msg), 200)
 
-        if not data:
-            abort(NotFound.code, message='没有记录', status=False)
-        if data.status_delete == STATUS_DEL_OK:
-            abort(NotFound.code, message='已经删除', status=False)
 
-        # 删除数据
-        result = delete_applicant(pk)
-
-        if not result:
-            abort(BadRequest.code, message='删除失败', status=False)
-
-        success_msg = SUCCESS_MSG.copy()
-        success_msg['message'] = '删除成功'
-        return make_response(jsonify(success_msg), 200)
-
-
-class ApplicantsResource(Resource):
+class AnalyzesResource(Resource):
     """
-    ApplicantsResource
+    AnalyzesResource
     """
     decorators = [
         # token_auth.login_required,
@@ -138,8 +138,8 @@ class ApplicantsResource(Resource):
     def get(self):
         """
         Example:
-            curl http://0.0.0.0:8000/applicant
-            curl http://0.0.0.0:8000/applicant?page=1&size=20
+            curl http://0.0.0.0:8000/analyze
+            curl http://0.0.0.0:8000/analyze?page=1&size=20
         :return:
         """
         # 条件参数
@@ -151,7 +151,7 @@ class ApplicantsResource(Resource):
         if not filter_parser_args:
             abort(BadRequest.code, message='参数错误', status=False)
 
-        pagination_obj = get_applicant_pagination(
+        pagination_obj = get_analyze_pagination(
             status_delete=STATUS_DEL_NO,
             **filter_parser_args
         )
@@ -163,9 +163,9 @@ class ApplicantsResource(Resource):
     def post(self):
         """
         Example:
-            curl http://0.0.0.0:8000/applicant -H "Content-Type: application/json" -X POST -d '
+            curl http://0.0.0.0:8000/analyze -H "Content-Type: application/json" -X POST -d '
             {
-                "applicant": {
+                "analyze": {
                     "name": "tom",
                     "salutation": "先生",
                     "mobile": "http://www.baidu.com",
@@ -183,7 +183,7 @@ class ApplicantsResource(Resource):
             abort(BadRequest.code, message='参数错误', status=False)
 
         request_data = request_item_args
-        result = add_applicant(request_data)
+        result = add_analyze(request_data)
 
         if not result:
             abort(BadRequest.code, message='创建失败', status=False)
@@ -191,20 +191,14 @@ class ApplicantsResource(Resource):
         success_msg = SUCCESS_MSG.copy()
         success_msg['id'] = result
         success_msg['message'] = '创建成功'
-        # fixme
-        year_code = '2019'
-        dep_code = 'FZ01'
-        index_code = '%06d' % (result % 1000000)
-        code = 'NZJ(%s)%s-%s' % (year_code, dep_code, index_code)
-        edit_applicant(result, {'code': code})
         return make_response(jsonify(success_msg), 200)
 
     def delete(self):
         """
         Example:
-            curl http://0.0.0.0:8000/user -X DELETE -d '
+            curl http://0.0.0.0:8000/analyze -X DELETE -d '
             {
-                "applicant": {
+                "analyze": {
                     "id": [1, 2]
                 }
             }'
@@ -218,7 +212,7 @@ class ApplicantsResource(Resource):
             abort(BadRequest.code, message='参数错误', status=False)
 
         request_data = request_item_args
-        result = delete_applicant(request_data['id'])
+        result = delete_analyze(request_data['id'])
 
         if not result:
             abort(BadRequest.code, message='删除失败', status=False)
