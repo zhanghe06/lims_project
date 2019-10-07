@@ -52,26 +52,36 @@ request_post.add_argument(
     name='type_detection',
     location=structure_key_item,
     store_missing=False,
+    required=True,
+    help='检验类型必填',
 )
 request_post.add_argument(
     name='type_test',
     location=structure_key_item,
     store_missing=False,
+    required=True,
+    help='测试类型必填',
 )
 request_post.add_argument(
     name='grade_id',
     location=structure_key_item,
     store_missing=False,
+    required=True,
+    help='样品等级必填',
 )
 request_post.add_argument(
     name='summary',
     location=structure_key_item,
     store_missing=False,
+    required=True,
+    help='样品数量必填',
 )
 request_post.add_argument(
     name='note',
     location=structure_key_item,
     store_missing=False,
+    required=True,
+    help='样品描述必填',
 )
 request_post.add_argument(
     name='style',
@@ -92,6 +102,8 @@ request_post.add_argument(
     name='period',
     location=structure_key_item,
     store_missing=False,
+    required=True,
+    help='检测周期必填',
 )
 request_post.add_argument(
     name='req_date',
