@@ -146,6 +146,7 @@ class MannersResource(Resource):
         filter_parser = reqparse.RequestParser(bundle_errors=True)
         filter_parser.add_argument('page', type=int, default=DEFAULT_PAGE, location='args')
         filter_parser.add_argument('size', type=int, default=DEFAULT_SITE, location='args')
+        filter_parser.add_argument('standard_id', type=int, store_missing=False, location='args')
         filter_parser_args = filter_parser.parse_args()
 
         if not filter_parser_args:

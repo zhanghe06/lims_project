@@ -26,8 +26,6 @@ request_post.add_argument(
     name='name',
     location=structure_key_item,
     store_missing=False,
-    required=True,
-    help='子样名称必填',
 )
 request_post.add_argument(
     name='applicant_id',
