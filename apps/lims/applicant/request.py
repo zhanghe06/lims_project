@@ -36,12 +36,68 @@ request_post.add_argument(
     help='委托单位必填',
 )
 request_post.add_argument(
+    name='applicant_uid',
+    location=structure_key_item,
+    store_missing=True,
+    help='送样人必填',
+)
+request_post.add_argument(
     name='detection_cid',
     location=structure_key_item,
     store_missing=False,
 )
 request_post.add_argument(
+    name='type_detection',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
+    name='type_test',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
+    name='grade_id',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
+    name='summary',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
     name='note',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
+    name='style',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
+    name='sku',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
+    name='brand',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
+    name='period',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
+    name='req_date',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
+    name='arr_date',
     location=structure_key_item,
     store_missing=False,
 )
@@ -53,11 +109,20 @@ request_put.add_argument(
     name='receiver_uid',
     location=structure_key_item,
     store_missing=False,
+    required=True,
+    help='受理人必填',
 )
 request_put.add_argument(
     name='applicant_cid',
     location=structure_key_item,
-    store_missing=False,
+    store_missing=True,
+    help='委托单位必填',
+)
+request_put.add_argument(
+    name='applicant_uid',
+    location=structure_key_item,
+    store_missing=True,
+    help='送样人必填',
 )
 request_put.add_argument(
     name='detection_cid',
@@ -65,7 +130,57 @@ request_put.add_argument(
     store_missing=False,
 )
 request_put.add_argument(
+    name='type_detection',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
+    name='type_test',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
+    name='grade_id',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
+    name='summary',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
     name='note',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
+    name='style',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
+    name='sku',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
+    name='brand',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
+    name='period',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
+    name='req_date',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
+    name='arr_date',
     location=structure_key_item,
     store_missing=False,
 )

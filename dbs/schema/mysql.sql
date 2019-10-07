@@ -72,7 +72,8 @@ CREATE TABLE `department` (
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY (`lab_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='部门表';
 
 
@@ -106,14 +107,14 @@ CREATE TABLE `holiday` (
 DROP TABLE IF EXISTS `company`;
 CREATE TABLE `company` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '公司名称',
-  `address` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '公司地址',
-  `site` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '公司官网',
-  `tel` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '公司电话',
-  `fax` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '公司传真',
-  `email` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '公司邮箱',
-  `type` TINYINT NOT NULL DEFAULT 0 COMMENT '公司类型（1:工商局,2:客户）',
-  `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '公司备注',
+  `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '单位名称',
+  `address` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '单位地址',
+  `site` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '单位官网',
+  `tel` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '单位电话',
+  `fax` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '单位传真',
+  `email` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '单位邮箱',
+  `type` TINYINT NOT NULL DEFAULT 0 COMMENT '单位类型（1:工商局,2:客户）',
+  `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '单位备注',
   `status_locked` TINYINT NOT NULL DEFAULT 0 COMMENT '锁定状态（0:未锁定,1:已锁定）',
   `status_delete` TINYINT NOT NULL DEFAULT 0 COMMENT '删除状态（0:未删除,1:已删除）',
   `locked_time` TIMESTAMP NULL COMMENT '锁定时间',
@@ -121,13 +122,13 @@ CREATE TABLE `company` (
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='公司表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='单位表';
 
 
 DROP TABLE IF EXISTS `contact`;
 CREATE TABLE `contact` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `cid` INT NOT NULL DEFAULT 0 COMMENT '公司ID',
+  `cid` INT NOT NULL DEFAULT 0 COMMENT '单位ID',
   `name` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '姓名',
   `salutation` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '称呼',
   `mobile` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '手机',
@@ -146,12 +147,22 @@ CREATE TABLE `contact` (
 DROP TABLE IF EXISTS `applicant`;
 CREATE TABLE `applicant` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `code` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '委托编号',
   `receiver_uid` INT NOT NULL DEFAULT 0 COMMENT '受理人ID',
-  `applicant_cid` INT NOT NULL DEFAULT 0 COMMENT '委托公司ID',
-  `detection_cid` INT NOT NULL DEFAULT 0 COMMENT '受检公司ID',
+  `applicant_cid` INT NOT NULL DEFAULT 0 COMMENT '委托单位ID',
+  `applicant_uid` INT NOT NULL DEFAULT 0 COMMENT '委托单位ID',
+  `detection_cid` INT NOT NULL DEFAULT 0 COMMENT '受检单位ID',
   `type_detection` TINYINT NOT NULL DEFAULT 0 COMMENT '检测类型（1:抽检,2:自测）',
   `type_test` TINYINT NOT NULL DEFAULT 0 COMMENT '测试类型（1:产品标准,2:方法测试）',
-  `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '备注',
+  `grade_id` TINYINT NOT NULL DEFAULT 0 COMMENT '样品等级（1:A级,2:B级,3:C级,4:D级）',
+  `summary` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '样品数量',
+  `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '样品描述',
+  `style` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '款号',
+  `sku` VARCHAR(100) NOT NULL DEFAULT '' COMMENT 'SKU',
+  `brand` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '商标',
+  `period` INT NOT NULL DEFAULT 0 COMMENT '检测周期（工作日）',
+  `req_date` DATE NOT NULL DEFAULT '0000-00-00' COMMENT '要求完成日期',
+  `arr_date` DATE NOT NULL DEFAULT '0000-00-00' COMMENT '样品到达日期',
   `status_delete` TINYINT NOT NULL DEFAULT 0 COMMENT '删除状态（0:未删除,1:已删除）',
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -159,6 +170,7 @@ CREATE TABLE `applicant` (
   PRIMARY KEY (`id`),
   KEY (`receiver_uid`),
   KEY (`applicant_cid`),
+  KEY (`applicant_uid`),
   KEY (`detection_cid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='委托申请表';
 
@@ -220,6 +232,7 @@ CREATE TABLE `detection` (
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY (`specimen_item_id`),
+  KEY (`manner_id`),
   KEY (`applicant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='检测表';
 
@@ -249,7 +262,8 @@ CREATE TABLE `manner` (
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY (`standard_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='方法表';
 
 
@@ -263,5 +277,6 @@ CREATE TABLE `log_operation` (
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY (`source_id`, `source_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';

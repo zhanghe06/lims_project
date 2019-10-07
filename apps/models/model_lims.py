@@ -18,12 +18,22 @@ class Applicant(Base):
     __tablename__ = 'applicant'
 
     id = Column(Integer, primary_key=True)
+    code = Column(String(100), nullable=False, server_default=text("''"))
     receiver_uid = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
     applicant_cid = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
+    applicant_uid = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
     detection_cid = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
     type_detection = Column(Integer, nullable=False, server_default=text("'0'"))
     type_test = Column(Integer, nullable=False, server_default=text("'0'"))
+    grade_id = Column(Integer, nullable=False, server_default=text("'0'"))
+    summary = Column(String(100), nullable=False, server_default=text("''"))
     note = Column(String(256), nullable=False, server_default=text("''"))
+    style = Column(String(100), nullable=False, server_default=text("''"))
+    sku = Column(String(100), nullable=False, server_default=text("''"))
+    brand = Column(String(100), nullable=False, server_default=text("''"))
+    period = Column(Integer, nullable=False, server_default=text("'0'"))
+    req_date = Column(Date, nullable=False, server_default=text("'0000-00-00'"))
+    arr_date = Column(Date, nullable=False, server_default=text("'0000-00-00'"))
     status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
     delete_time = Column(DateTime)
     create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP"))
@@ -72,7 +82,7 @@ class Department(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False, server_default=text("''"))
-    lab_id = Column(Integer, nullable=False, server_default=text("'0'"))
+    lab_id = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
     note = Column(String(256), nullable=False, server_default=text("''"))
     status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
     delete_time = Column(DateTime)
@@ -86,8 +96,9 @@ class Detection(Base):
     id = Column(Integer, primary_key=True)
     code = Column(String(100), nullable=False, server_default=text("''"))
     name = Column(String(100), nullable=False, server_default=text("''"))
-    specimen_item_id = Column(Integer, nullable=False, server_default=text("'0'"))
-    manner_id = Column(Integer, nullable=False, server_default=text("'0'"))
+    specimen_item_id = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
+    manner_id = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
+    applicant_id = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
     note = Column(String(256), nullable=False, server_default=text("''"))
     status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
     delete_time = Column(DateTime)
@@ -134,6 +145,9 @@ class Laboratory(Base):
 
 class LogOperation(Base):
     __tablename__ = 'log_operation'
+    __table_args__ = (
+        Index('source_id', 'source_id', 'source_type'),
+    )
 
     id = Column(Integer, primary_key=True)
     source_id = Column(Integer, nullable=False, server_default=text("'0'"))
@@ -151,7 +165,7 @@ class Manner(Base):
     id = Column(Integer, primary_key=True)
     code = Column(String(100), nullable=False, server_default=text("''"))
     name = Column(String(100), nullable=False, server_default=text("''"))
-    standard_id = Column(Integer, nullable=False, server_default=text("'0'"))
+    standard_id = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
     note = Column(String(256), nullable=False, server_default=text("''"))
     status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
     delete_time = Column(DateTime)
@@ -186,21 +200,8 @@ class SpecimenItem(Base):
     id = Column(Integer, primary_key=True)
     code = Column(String(100), nullable=False, server_default=text("''"))
     name = Column(String(100), nullable=False, server_default=text("''"))
-    specimen_id = Column(Integer, nullable=False, server_default=text("'0'"))
-    note = Column(String(256), nullable=False, server_default=text("''"))
-    status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
-    delete_time = Column(DateTime)
-    create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP"))
-    update_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"))
-
-
-class SpecimenItems(Base):
-    __tablename__ = 'specimen_items'
-
-    id = Column(Integer, primary_key=True)
-    code = Column(String(100), nullable=False, server_default=text("''"))
-    name = Column(String(100), nullable=False, server_default=text("''"))
-    specimen_id = Column(Integer, nullable=False, server_default=text("'0'"))
+    specimen_id = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
+    applicant_id = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
     note = Column(String(256), nullable=False, server_default=text("''"))
     status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
     delete_time = Column(DateTime)
