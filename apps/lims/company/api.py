@@ -95,7 +95,8 @@ def delete_company(company_id, force=False):
             'status_delete': STATUS_DEL_OK,
             'delete_time': datetime.datetime.utcnow()
         }
-        return db_instance.edit(Company, company_id, data)
+        return db_instance.update_rows(Company, data, Company.id.in_(company_id))
+        # return db_instance.edit(Company, company_id, data)
 
 
 def get_company_pagination(page=1, size=10, *args, **kwargs):

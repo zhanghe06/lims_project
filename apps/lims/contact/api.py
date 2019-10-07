@@ -95,7 +95,8 @@ def delete_contact(contact_id, force=False):
             'status_delete': STATUS_DEL_OK,
             'delete_time': datetime.datetime.utcnow()
         }
-        return db_instance.edit(Contact, contact_id, data)
+        return db_instance.update_rows(Contact, data, Contact.id.in_(contact_id))
+        # return db_instance.edit(Contact, contact_id, data)
 
 
 def get_contact_pagination(page=1, size=10, *args, **kwargs):

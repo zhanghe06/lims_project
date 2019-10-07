@@ -30,11 +30,11 @@ request_post.add_argument(
     help='子样名称必填',
 )
 request_post.add_argument(
-    name='specimen_id',
+    name='applicant_id',
     location=structure_key_item,
     store_missing=False,
     required=True,
-    help='样品必填',
+    help='委托ID必填',
 )
 request_post.add_argument(
     name='note',
@@ -51,7 +51,7 @@ request_put.add_argument(
     store_missing=False,
 )
 request_put.add_argument(
-    name='specimen_id',
+    name='applicant_id',
     location=structure_key_item,
     store_missing=False,
 )
@@ -59,4 +59,15 @@ request_put.add_argument(
     name='note',
     location=structure_key_item,
     store_missing=False,
+)
+
+# DELETE
+request_delete = request_parser_item.copy()
+
+request_delete.add_argument(
+    name='id',
+    location=structure_key_item,
+    store_missing=False,
+    required=True,
+    help='ID必填',
 )

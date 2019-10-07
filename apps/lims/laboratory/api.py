@@ -95,7 +95,8 @@ def delete_laboratory(laboratory_id, force=False):
             'status_delete': STATUS_DEL_OK,
             'delete_time': datetime.datetime.utcnow()
         }
-        return db_instance.edit(Laboratory, laboratory_id, data)
+        return db_instance.update_rows(Laboratory, data, Laboratory.id.in_(laboratory_id))
+        # return db_instance.edit(Laboratory, laboratory_id, data)
 
 
 def get_laboratory_pagination(page=1, size=10, *args, **kwargs):
