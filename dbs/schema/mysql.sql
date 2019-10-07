@@ -207,6 +207,8 @@ CREATE TABLE `specimen_item` (
   `specimen_id` INT NOT NULL DEFAULT 0 COMMENT '样品ID',
   `applicant_id` INT NOT NULL DEFAULT 0 COMMENT '申请ID',
   `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '备注',
+  `status_allocate` TINYINT NOT NULL DEFAULT 0 COMMENT '分配状态（0:未分配,1:已分配）',
+  `allocate_time` TIMESTAMP NULL COMMENT '分配时间',
   `status_delete` TINYINT NOT NULL DEFAULT 0 COMMENT '删除状态（0:未删除,1:已删除）',
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

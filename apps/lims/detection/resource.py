@@ -22,6 +22,9 @@ from apps.lims.detection.api import (
     add_detection,
     edit_detection,
 )
+from apps.lims.specimen_item.api import (
+    edit_specimen_item,
+)
 from apps.lims.detection.request import (
     structure_key_item,
     request_parser,
@@ -166,12 +169,10 @@ class DetectionsResource(Resource):
             curl http://0.0.0.0:8000/detection -H "Content-Type: application/json" -X POST -d '
             {
                 "detection": {
-                    "name": "tom",
-                    "salutation": "先生",
-                    "mobile": "http://www.baidu.com",
-                    "tel": "021-62345678",
-                    "fax": "021-62345678",
-                    "email": "haha@haha.com"
+                    "name": "a",
+                    "specimen_item_id": 1,
+                    "manner_id": 1,
+                    "note": "hello"
                 }
             }'
         :return:
@@ -191,6 +192,11 @@ class DetectionsResource(Resource):
         success_msg = SUCCESS_MSG.copy()
         success_msg['id'] = result
         success_msg['message'] = '创建成功'
+        # todo 更新子样分配状态
+        edit_specimen_item(
+            request_item_args['specimen_item_id'],
+            {'status_allocate': 1}
+        )
         return make_response(jsonify(success_msg), 200)
 
     def delete(self):

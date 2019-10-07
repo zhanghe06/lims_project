@@ -203,6 +203,8 @@ class SpecimenItem(Base):
     specimen_id = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
     applicant_id = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
     note = Column(String(256), nullable=False, server_default=text("''"))
+    status_allocate = Column(Integer, nullable=False, server_default=text("'0'"))
+    allocate_time = Column(DateTime)
     status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
     delete_time = Column(DateTime)
     create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP"))

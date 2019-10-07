@@ -18,6 +18,7 @@ fields_item = {
     'name': fields.String(attribute='name'),
     'specimen_id': fields.Integer(attribute='specimen_id'),
     'note': fields.String(attribute='note'),
+    'status_allocate': fields.Integer(attribute='status_allocate'),
     'create_time': fields.DateTime(dt_format=b'iso8601'),
     'update_time': fields.DateTime(dt_format=b'iso8601'),
 }
