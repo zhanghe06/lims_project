@@ -26,19 +26,21 @@ request_post.add_argument(
     name='receiver_uid',
     location=structure_key_item,
     store_missing=False,
-    required=True,
+    required=False,
     help='受理人必填',
 )
 request_post.add_argument(
     name='applicant_cid',
     location=structure_key_item,
-    store_missing=True,
+    store_missing=False,
+    required=True,
     help='委托单位必填',
 )
 request_post.add_argument(
     name='applicant_uid',
     location=structure_key_item,
-    store_missing=True,
+    store_missing=False,
+    required=True,
     help='送样人必填',
 )
 request_post.add_argument(
@@ -109,20 +111,16 @@ request_put.add_argument(
     name='receiver_uid',
     location=structure_key_item,
     store_missing=False,
-    required=True,
-    help='受理人必填',
 )
 request_put.add_argument(
     name='applicant_cid',
     location=structure_key_item,
-    store_missing=True,
-    help='委托单位必填',
+    store_missing=False,
 )
 request_put.add_argument(
     name='applicant_uid',
     location=structure_key_item,
-    store_missing=True,
-    help='送样人必填',
+    store_missing=False,
 )
 request_put.add_argument(
     name='detection_cid',
