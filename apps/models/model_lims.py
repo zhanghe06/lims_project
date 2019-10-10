@@ -180,6 +180,7 @@ class Manner(Base):
     code = Column(String(100), nullable=False, server_default=text("''"))
     name = Column(String(100), nullable=False, server_default=text("''"))
     standard_id = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
+    condition = Column(String(100), nullable=False, server_default=text("''"))
     note = Column(String(256), nullable=False, server_default=text("''"))
     status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
     delete_time = Column(DateTime)
