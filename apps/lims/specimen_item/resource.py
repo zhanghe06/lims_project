@@ -22,12 +22,21 @@ from apps.lims.specimen_item.api import (
     add_specimen_item,
     edit_specimen_item,
 )
+from apps.lims.detection.api import (
+    get_detection_row_by_id,
+    delete_detection,
+    get_detection_pagination,
+    add_detection,
+    edit_detection,
+    get_detection_rows,
+)
 from apps.lims.specimen_item.request import (
     structure_key_item,
     request_parser,
     request_post,
     request_put,
     request_delete,
+    request_clone,
 )
 from apps.lims.specimen_item.response import fields_item
 from apps.maps.status_delete import STATUS_DEL_OK, STATUS_DEL_NO
@@ -220,4 +229,65 @@ class SpecimenItemsResource(Resource):
 
         success_msg = SUCCESS_MSG.copy()
         success_msg['message'] = '删除成功'
+        return make_response(jsonify(success_msg), 200)
+
+
+class SpecimenCloneResource(Resource):
+    """
+    SpecimenCloneResource
+    """
+    decorators = [
+        # token_auth.login_required,
+    ]
+
+    def post(self):
+        """
+        Example:
+            curl http://0.0.0.0:8000/specimen_clone -H "Content-Type: application/json" -X POST -d '
+            {
+                "specimen_clone": {
+                    "id": 1
+                }
+            }'
+        :return:
+        """
+        request_args = request_parser.parse_args()
+        request_item_args = request_clone.parse_args(req=request_args)
+
+        if not request_item_args:
+            abort(BadRequest.code, message='参数错误', status=False)
+
+        request_data = request_item_args
+        # 克隆子样
+        specimen_row = get_specimen_item_row_by_id(request_data['id'])
+        if not specimen_row:
+            abort(NotFound.code, message='没有记录', status=False)
+        if specimen_row.status_delete == STATUS_DEL_OK:
+            abort(NotFound.code, message='已经删除', status=False)
+
+        specimen_data = specimen_row.to_dict()
+        specimen_data.pop('id', 0)
+        specimen_data.pop('note', '')
+        specimen_data.pop('create_time', None)
+        specimen_data.pop('update_time', None)
+        result_specimen_item_id = add_specimen_item(specimen_data)
+        if not result_specimen_item_id:
+            abort(BadRequest.code, message='克隆子样失败', status=False)
+        # 克隆分配
+        detection_rows = get_detection_rows(**{
+            'specimen_item_id': request_data['id'],
+            'status_delete': STATUS_DEL_NO,
+        })
+        for detection_row in detection_rows:
+            detection_data = detection_row.to_dict()
+            detection_data.pop('id', 0)
+            detection_data.pop('create_time', None)
+            detection_data.pop('update_time', None)
+            detection_data['specimen_item_id'] = result_specimen_item_id
+            result = add_detection(detection_data)
+            if not result:
+                abort(BadRequest.code, message='克隆分配失败', status=False)
+        success_msg = SUCCESS_MSG.copy()
+        success_msg['id'] = result_specimen_item_id
+        success_msg['message'] = '克隆成功'
         return make_response(jsonify(success_msg), 200)

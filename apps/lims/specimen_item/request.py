@@ -69,3 +69,14 @@ request_delete.add_argument(
     required=True,
     help='ID必填',
 )
+
+# CLONE
+request_clone = request_parser_item.copy()
+
+request_clone.add_argument(
+    name='id',
+    location=structure_key_item,
+    store_missing=False,
+    required=True,
+    help='ID必填',
+)

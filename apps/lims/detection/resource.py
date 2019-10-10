@@ -10,6 +10,7 @@
 
 from __future__ import unicode_literals
 
+import datetime
 from flask import jsonify, make_response
 from flask_restful import Resource, marshal, reqparse, abort
 from werkzeug.exceptions import NotFound, BadRequest
@@ -128,10 +129,18 @@ class DetectionResource(Resource):
 
         # 更新子样分配状态
         if manner_ids:
-            edit_specimen_item(
-                request_item_args['specimen_item_id'],
-                {'status_allocate': 1}
-            )
+            status_allocate = 1
+            allocate_time = datetime.datetime.utcnow()
+        else:
+            status_allocate = 0
+            allocate_time = None
+        edit_specimen_item(
+            request_item_args['specimen_item_id'],
+            {
+                'status_allocate': status_allocate,
+                'allocate_time': allocate_time,
+            }
+        )
 
         success_msg = SUCCESS_MSG.copy()
         success_msg['message'] = '更新成功'
@@ -256,10 +265,36 @@ class DetectionsResource(Resource):
             abort(BadRequest.code, message='参数错误', status=False)
 
         request_data = request_item_args
-        result = delete_detection(request_data['id'])
+        detection_ids = request_data['id']
+
+        detection_row = get_detection_row_by_id(detection_ids[0])
+        if not detection_row:
+            abort(NotFound.code, message='没有记录', status=False)
+        specimen_item_id = detection_row.specimen_item_id
+
+        result = delete_detection(detection_ids)
 
         if not result:
             abort(BadRequest.code, message='删除失败', status=False)
+
+        # 更新子样分配状态 todo
+        detection_rows = get_detection_rows(**{
+            'specimen_item_id': specimen_item_id,
+            'status_delete': STATUS_DEL_NO,
+        })
+        if detection_rows:
+            status_allocate = 1
+            allocate_time = datetime.datetime.utcnow()
+        else:
+            status_allocate = 0
+            allocate_time = None
+        edit_specimen_item(
+            specimen_item_id,
+            {
+                'status_allocate': status_allocate,
+                'allocate_time': allocate_time,
+            }
+        )
 
         success_msg = SUCCESS_MSG.copy()
         success_msg['message'] = '删除成功'
