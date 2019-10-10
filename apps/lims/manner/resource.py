@@ -29,6 +29,12 @@ from apps.lims.manner.request import (
     request_put,
     request_delete,
 )
+from apps.lims.map_standard_manner.api import (
+    add_map_standard_manner,
+    get_map_standard_manner_row,
+    get_map_standard_manner_rows,
+    delete_map_standard_manner,
+)
 from apps.lims.manner.response import fields_item
 from apps.maps.status_delete import STATUS_DEL_OK, STATUS_DEL_NO
 
@@ -151,6 +157,11 @@ class MannersResource(Resource):
 
         if not filter_parser_args:
             abort(BadRequest.code, message='参数错误', status=False)
+
+        standard_id = filter_parser_args.pop('standard_id', 0)
+        if standard_id:
+            map_rows = get_map_standard_manner_rows(**{'standard_id': standard_id})
+            manner_ids = [map_row.manner_id for map_row in map_rows]
 
         pagination_obj = get_manner_pagination(
             status_delete=STATUS_DEL_NO,

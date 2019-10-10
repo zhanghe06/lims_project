@@ -22,6 +22,11 @@ from apps.lims.standard.api import (
     add_standard,
     edit_standard,
 )
+from apps.lims.map_standard_manner.api import (
+    add_map_standard_manner,
+    get_map_standard_manner_rows,
+    delete_map_standard_manner,
+)
 from apps.lims.standard.request import (
     structure_key_item,
     request_parser,
@@ -31,6 +36,7 @@ from apps.lims.standard.request import (
 )
 from apps.lims.standard.response import fields_item
 from apps.maps.status_delete import STATUS_DEL_OK, STATUS_DEL_NO
+from apps.models.model_lims import MapStandardManner
 
 DEFAULT_PAGE = app.config['DEFAULT_PAGE']
 DEFAULT_SITE = app.config['DEFAULT_SITE']
@@ -92,6 +98,24 @@ class StandardResource(Resource):
 
         # 更新数据
         request_data = request_item_args
+        manner_ids = request_item_args.pop('manner_id', [])  # 关联数据
+        # 关联数据（2步）
+        # 1. 清除历史
+        map_rows = get_map_standard_manner_rows(**{'standard_id': pk})
+        map_ids = [map_row.id for map_row in map_rows]
+        if map_ids:
+            result = delete_map_standard_manner(map_ids)
+            if not result:
+                abort(BadRequest.code, message='删除失败', status=False)
+        # 2. 新增更新
+        for manner_id in manner_ids:
+            map_data = {
+                'standard_id': pk,
+                'manner_id': manner_id,
+            }
+            result = add_map_standard_manner(map_data)
+            if not result:
+                abort(BadRequest.code, message='创建失败', status=False)
         result = edit_standard(pk, request_data)
 
         if not result:
@@ -183,11 +207,20 @@ class StandardsResource(Resource):
             abort(BadRequest.code, message='参数错误', status=False)
 
         request_data = request_item_args
+        manner_ids = request_item_args.pop('manner_id', [])  # 关联数据
         result = add_standard(request_data)
 
         if not result:
             abort(BadRequest.code, message='创建失败', status=False)
-
+        # 关联数据
+        for manner_id in manner_ids:
+            map_data = {
+                'standard_id': result,
+                'manner_id': manner_id,
+            }
+            result = add_map_standard_manner(map_data)
+            if not result:
+                abort(BadRequest.code, message='创建失败', status=False)
         success_msg = SUCCESS_MSG.copy()
         success_msg['id'] = result
         success_msg['message'] = '创建成功'

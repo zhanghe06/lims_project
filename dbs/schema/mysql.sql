@@ -259,16 +259,29 @@ CREATE TABLE `manner` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `code` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '方法编号',
   `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '方法名称',
-  `standard_id` INT NOT NULL DEFAULT 0 COMMENT '标准ID',
   `condition` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '条件',
   `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '备注',
   `status_delete` TINYINT NOT NULL DEFAULT 0 COMMENT '删除状态（0:未删除,1:已删除）',
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`),
-  KEY (`standard_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='方法表';
+
+
+DROP TABLE IF EXISTS `map_standard_manner`;
+CREATE TABLE `map_standard_manner` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `standard_id` INT NOT NULL DEFAULT 0 COMMENT '标准ID',
+  `manner_id` INT NOT NULL DEFAULT 0 COMMENT '方法ID',
+  `status_delete` TINYINT NOT NULL DEFAULT 0 COMMENT '删除状态（0:未删除,1:已删除）',
+  `delete_time` TIMESTAMP NULL COMMENT '删除时间',
+  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY (`standard_id`),
+  KEY (`manner_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='标准方法对应表';
 
 
 DROP TABLE IF EXISTS `analyze`;
