@@ -274,6 +274,7 @@ CREATE TABLE `map_standard_manner` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `standard_id` INT NOT NULL DEFAULT 0 COMMENT '标准ID',
   `manner_id` INT NOT NULL DEFAULT 0 COMMENT '方法ID',
+  `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '方法名称',
   `status_delete` TINYINT NOT NULL DEFAULT 0 COMMENT '删除状态（0:未删除,1:已删除）',
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

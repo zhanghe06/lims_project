@@ -21,8 +21,13 @@ from apps.lims.detection.api import (
     get_detection_pagination,
     add_detection,
     edit_detection,
+    get_detection_rows,
 )
 from apps.lims.specimen_item.api import (
+    get_specimen_item_row_by_id,
+    delete_specimen_item,
+    get_specimen_item_pagination,
+    add_specimen_item,
     edit_specimen_item,
 )
 from apps.lims.detection.request import (
@@ -85,8 +90,8 @@ class DetectionResource(Resource):
         if not request_item_args:
             abort(BadRequest.code, message='参数错误', status=False)
 
-        # 是否存在
-        data = get_detection_row_by_id(pk)
+        # 是否存在(字样ID，并非分配ID)
+        data = get_specimen_item_row_by_id(pk)
 
         if not data:
             abort(NotFound.code, message='没有记录', status=False)
@@ -95,10 +100,38 @@ class DetectionResource(Resource):
 
         # 更新数据
         request_data = request_item_args
-        result = edit_detection(pk, request_data)
+        manner_ids = request_data.pop('manner_id', [])  # 关联数据
+        # 关联数据（2步）
+        result = False
+        # 1. 清除历史
+        detection_rows = get_detection_rows(
+            **{
+                'specimen_item_id': request_data['specimen_item_id'],
+                'status_delete': STATUS_DEL_NO,
+            }
+        )
+        detection_ids = [detection_row.id for detection_row in detection_rows]
+        if detection_ids:
+            result = delete_detection(detection_ids)
+            if not result:
+                abort(BadRequest.code, message='删除失败', status=False)
+        # 2. 新增更新
+        for manner_id in manner_ids:
+            request_data['manner_id'] = manner_id
+            result = add_detection(request_data)
+
+            if not result:
+                abort(BadRequest.code, message='创建失败', status=False)
 
         if not result:
             abort(NotFound.code, message='更新失败', status=False)
+
+        # 更新子样分配状态
+        if manner_ids:
+            edit_specimen_item(
+                request_item_args['specimen_item_id'],
+                {'status_allocate': 1}
+            )
 
         success_msg = SUCCESS_MSG.copy()
         success_msg['message'] = '更新成功'
@@ -149,6 +182,7 @@ class DetectionsResource(Resource):
         filter_parser = reqparse.RequestParser(bundle_errors=True)
         filter_parser.add_argument('page', type=int, default=DEFAULT_PAGE, location='args')
         filter_parser.add_argument('size', type=int, default=DEFAULT_SITE, location='args')
+        filter_parser.add_argument('specimen_item_id', type=int, store_missing=False, location='args')
         filter_parser_args = filter_parser.parse_args()
 
         if not filter_parser_args:
@@ -184,19 +218,23 @@ class DetectionsResource(Resource):
             abort(BadRequest.code, message='参数错误', status=False)
 
         request_data = request_item_args
-        result = add_detection(request_data)
 
-        if not result:
-            abort(BadRequest.code, message='创建失败', status=False)
+        manner_ids = request_data.pop('manner_id', [])  # 关联数据
+        for manner_id in manner_ids:
+            request_data['manner_id'] = manner_id
+            result = add_detection(request_data)
 
+            if not result:
+                abort(BadRequest.code, message='创建失败', status=False)
+
+        # 更新子样分配状态
+        if manner_ids:
+            edit_specimen_item(
+                request_item_args['specimen_item_id'],
+                {'status_allocate': 1}
+            )
         success_msg = SUCCESS_MSG.copy()
-        success_msg['id'] = result
         success_msg['message'] = '创建成功'
-        # todo 更新子样分配状态
-        edit_specimen_item(
-            request_item_args['specimen_item_id'],
-            {'status_allocate': 1}
-        )
         return make_response(jsonify(success_msg), 200)
 
     def delete(self):

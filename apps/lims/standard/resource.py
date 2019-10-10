@@ -36,7 +36,6 @@ from apps.lims.standard.request import (
 )
 from apps.lims.standard.response import fields_item
 from apps.maps.status_delete import STATUS_DEL_OK, STATUS_DEL_NO
-from apps.models.model_lims import MapStandardManner
 
 DEFAULT_PAGE = app.config['DEFAULT_PAGE']
 DEFAULT_SITE = app.config['DEFAULT_SITE']
@@ -98,10 +97,10 @@ class StandardResource(Resource):
 
         # 更新数据
         request_data = request_item_args
-        manner_ids = request_item_args.pop('manner_id', [])  # 关联数据
+        manner_ids = request_data.pop('manner_id', [])  # 关联数据
         # 关联数据（2步）
         # 1. 清除历史
-        map_rows = get_map_standard_manner_rows(**{'standard_id': pk})
+        map_rows = get_map_standard_manner_rows(**{'standard_id': pk, 'status_delete': STATUS_DEL_NO})
         map_ids = [map_row.id for map_row in map_rows]
         if map_ids:
             result = delete_map_standard_manner(map_ids)
@@ -207,7 +206,7 @@ class StandardsResource(Resource):
             abort(BadRequest.code, message='参数错误', status=False)
 
         request_data = request_item_args
-        manner_ids = request_item_args.pop('manner_id', [])  # 关联数据
+        manner_ids = request_data.pop('manner_id', [])  # 关联数据
         result = add_standard(request_data)
 
         if not result:

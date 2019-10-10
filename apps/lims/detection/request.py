@@ -41,10 +41,16 @@ request_post.add_argument(
 )
 request_post.add_argument(
     name='manner_id',
+    type=list,
     location=structure_key_item,
     store_missing=False,
     required=True,
     help='方法必填',
+)
+request_post.add_argument(
+    name='applicant_id',
+    location=structure_key_item,
+    store_missing=False,
 )
 request_post.add_argument(
     name='note',
@@ -64,6 +70,8 @@ request_put.add_argument(
     name='specimen_item_id',
     location=structure_key_item,
     store_missing=False,
+    required=True,
+    help='子样必填',
 )
 request_put.add_argument(
     name='standard_id',
@@ -72,6 +80,12 @@ request_put.add_argument(
 )
 request_put.add_argument(
     name='manner_id',
+    type=list,
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
+    name='applicant_id',
     location=structure_key_item,
     store_missing=False,
 )

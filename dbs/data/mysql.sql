@@ -53,7 +53,18 @@ INSERT INTO `manner` VALUES (4, 'GB-2019', '标准4', '', '', 0, NULL, '2018-03-
 
 -- 标准方法关系
 TRUNCATE TABLE `map_standard_manner`;
-INSERT INTO `map_standard_manner` VALUES (1, 1, 1, 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
-INSERT INTO `map_standard_manner` VALUES (2, 1, 3, 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
-INSERT INTO `map_standard_manner` VALUES (3, 2, 1, 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
-INSERT INTO `map_standard_manner` VALUES (4, 2, 4, 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
+INSERT INTO `map_standard_manner` VALUES (1, 1, 1, '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
+INSERT INTO `map_standard_manner` VALUES (2, 1, 3, '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
+INSERT INTO `map_standard_manner` VALUES (3, 2, 1, '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
+INSERT INTO `map_standard_manner` VALUES (4, 2, 4, '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
+
+-- 申请
+TRUNCATE TABLE `applicant`;
+INSERT INTO `applicant` VALUES (1, '委托编号1', 1, 1, 1, 3, 1, 2, 1, '衣裤1套', '', '', '', '', 7, '2019-10-10', '2019-10-17', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
+
+
+-- 子样
+TRUNCATE TABLE `specimen_item`;
+INSERT INTO `specimen_item` VALUES (1, 'A', '子样', 0, 1, '', 0, NULL, 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
+
+-- 测试分配
