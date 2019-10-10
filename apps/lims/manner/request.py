@@ -23,6 +23,13 @@ request_parser_item = reqparse.RequestParser(trim=True, bundle_errors=True)
 request_post = request_parser_item.copy()
 
 request_post.add_argument(
+    name='code',
+    location=structure_key_item,
+    store_missing=False,
+    required=True,
+    help='方法必填',
+)
+request_post.add_argument(
     name='name',
     location=structure_key_item,
     store_missing=False,
@@ -48,6 +55,11 @@ request_post.add_argument(
 # PUT
 request_put = request_parser_item.copy()
 
+request_put.add_argument(
+    name='code',
+    location=structure_key_item,
+    store_missing=False,
+)
 request_put.add_argument(
     name='name',
     location=structure_key_item,
