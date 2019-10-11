@@ -68,3 +68,4 @@ TRUNCATE TABLE `specimen_item`;
 INSERT INTO `specimen_item` VALUES (1, 'A', '子样', 0, 1, '', 0, NULL, 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
 
 -- 测试分配
+TRUNCATE TABLE `detection`;

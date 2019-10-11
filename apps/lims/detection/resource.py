@@ -91,8 +91,8 @@ class DetectionResource(Resource):
         if not request_item_args:
             abort(BadRequest.code, message='参数错误', status=False)
 
-        # 是否存在(字样ID，并非分配ID)
-        data = get_specimen_item_row_by_id(pk)
+        # 是否存在
+        data = get_detection_row_by_id(pk)
 
         if not data:
             abort(NotFound.code, message='没有记录', status=False)
@@ -101,46 +101,10 @@ class DetectionResource(Resource):
 
         # 更新数据
         request_data = request_item_args
-        manner_ids = request_data.pop('manner_id', [])  # 关联数据
-        # 关联数据（2步）
-        result = False
-        # 1. 清除历史
-        detection_rows = get_detection_rows(
-            **{
-                'specimen_item_id': request_data['specimen_item_id'],
-                'status_delete': STATUS_DEL_NO,
-            }
-        )
-        detection_ids = [detection_row.id for detection_row in detection_rows]
-        if detection_ids:
-            result = delete_detection(detection_ids)
-            if not result:
-                abort(BadRequest.code, message='删除失败', status=False)
-        # 2. 新增更新
-        for manner_id in manner_ids:
-            request_data['manner_id'] = manner_id
-            result = add_detection(request_data)
-
-            if not result:
-                abort(BadRequest.code, message='创建失败', status=False)
+        result = edit_detection(pk, request_data)
 
         if not result:
             abort(NotFound.code, message='更新失败', status=False)
-
-        # 更新子样分配状态
-        if manner_ids:
-            status_allocate = 1
-            allocate_time = datetime.datetime.utcnow()
-        else:
-            status_allocate = 0
-            allocate_time = None
-        edit_specimen_item(
-            request_item_args['specimen_item_id'],
-            {
-                'status_allocate': status_allocate,
-                'allocate_time': allocate_time,
-            }
-        )
 
         success_msg = SUCCESS_MSG.copy()
         success_msg['message'] = '更新成功'
