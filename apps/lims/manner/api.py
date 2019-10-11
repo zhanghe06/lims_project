@@ -93,7 +93,7 @@ def delete_manner(manner_id, force=False):
     else:
         data = {
             'status_delete': STATUS_DEL_OK,
-            'delete_time': datetime.datetime.utcnow()
+            'delete_time': datetime.datetime.now()
         }
         return db_instance.update_rows(Manner, data, Manner.id.in_(manner_id))
         # return db_instance.edit(Manner, manner_id, data)

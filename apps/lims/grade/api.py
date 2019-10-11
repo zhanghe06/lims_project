@@ -93,7 +93,7 @@ def delete_grade(grade_id, force=False):
     else:
         data = {
             'status_delete': STATUS_DEL_OK,
-            'delete_time': datetime.datetime.utcnow()
+            'delete_time': datetime.datetime.now()
         }
         return db_instance.update_rows(Grade, data, Grade.id.in_(grade_id))
         # return db_instance.edit(Grade, grade_id, data)

@@ -11,6 +11,7 @@
 
 from sqlalchemy.inspection import inspect
 from sqlalchemy import distinct
+from datetime import datetime
 
 
 class DbInstance(object):
@@ -162,6 +163,9 @@ class DbInstance(object):
         :param data:
         :return: None/Value of model_obj.PK
         """
+        current_time = datetime.now()
+        data['create_time'] = data.pop('create_time', current_time)
+        data['update_time'] = data.pop('update_time', current_time)
         model_obj = model_class(**data)
         try:
             self.db_instance.session.add(model_obj)
@@ -183,6 +187,7 @@ class DbInstance(object):
         model_pk = getattr(model_class, model_pk_name)
         try:
             model_obj = self.db_instance.session.query(model_class).filter(model_pk == pk_id)
+            data['update_time'] = data.pop('update_time', datetime.now())
             result = model_obj.update(data)
             self.db_instance.session.commit()
             return result

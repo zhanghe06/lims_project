@@ -15,6 +15,6 @@ STATUS_DEL_NO = 0
 STATUS_DEL_OK = 1
 
 STATUS_DEL_DICT = {
-    STATUS_DEL_NO: '未删除',  # 未删除
-    STATUS_DEL_OK: '已删除',  # 已删除
+    STATUS_DEL_NO: '未删除',
+    STATUS_DEL_OK: '已删除',
 }

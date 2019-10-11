@@ -93,7 +93,7 @@ def delete_analyze(analyze_id, force=False):
     else:
         data = {
             'status_delete': STATUS_DEL_OK,
-            'delete_time': datetime.datetime.utcnow()
+            'delete_time': datetime.datetime.now()
         }
         return db_instance.update_rows(Analyze, data, Analyze.id.in_(analyze_id))
         # return db_instance.edit(Analyze, analyze_id, data)

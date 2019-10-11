@@ -93,7 +93,7 @@ def delete_specimen(specimen_id, force=False):
     else:
         data = {
             'status_delete': STATUS_DEL_OK,
-            'delete_time': datetime.datetime.utcnow()
+            'delete_time': datetime.datetime.now()
         }
         return db_instance.update_rows(Specimen, data, Specimen.id.in_(specimen_id))
         # return db_instance.edit(Specimen, specimen_id, data)

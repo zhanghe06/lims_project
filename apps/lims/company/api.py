@@ -93,7 +93,7 @@ def delete_company(company_id, force=False):
     else:
         data = {
             'status_delete': STATUS_DEL_OK,
-            'delete_time': datetime.datetime.utcnow()
+            'delete_time': datetime.datetime.now()
         }
         return db_instance.update_rows(Company, data, Company.id.in_(company_id))
         # return db_instance.edit(Company, company_id, data)

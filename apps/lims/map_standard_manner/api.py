@@ -93,7 +93,7 @@ def delete_map_standard_manner(map_standard_manner_id, force=False):
     else:
         data = {
             'status_delete': STATUS_DEL_OK,
-            'delete_time': datetime.datetime.utcnow()
+            'delete_time': datetime.datetime.now()
         }
         return db_instance.update_rows(MapStandardManner, data, MapStandardManner.id.in_(map_standard_manner_id))
         # return db_instance.edit(MapStandardManner, map_standard_manner_id, data)

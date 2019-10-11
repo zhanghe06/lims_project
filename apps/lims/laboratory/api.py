@@ -93,7 +93,7 @@ def delete_laboratory(laboratory_id, force=False):
     else:
         data = {
             'status_delete': STATUS_DEL_OK,
-            'delete_time': datetime.datetime.utcnow()
+            'delete_time': datetime.datetime.now()
         }
         return db_instance.update_rows(Laboratory, data, Laboratory.id.in_(laboratory_id))
         # return db_instance.edit(Laboratory, laboratory_id, data)

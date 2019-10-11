@@ -268,7 +268,7 @@ class DetectionsResource(Resource):
         # 更新子样分配状态
         if manner_ids:
             status_allocate = 1
-            allocate_time = datetime.datetime.utcnow()
+            allocate_time = datetime.datetime.now()
         else:
             status_allocate = 0
             allocate_time = None
@@ -322,7 +322,7 @@ class DetectionsResource(Resource):
         })
         if detection_rows:
             status_allocate = 1
-            allocate_time = datetime.datetime.utcnow()
+            allocate_time = datetime.datetime.now()
         else:
             status_allocate = 0
             allocate_time = None
