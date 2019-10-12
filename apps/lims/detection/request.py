@@ -41,7 +41,8 @@ request_post.add_argument(
 )
 request_post.add_argument(
     name='manner_id',
-    type=list,
+    type=int,
+    action='append',
     location=structure_key_item,
     store_missing=False,
     required=True,
@@ -80,7 +81,8 @@ request_put.add_argument(
 )
 request_put.add_argument(
     name='manner_id',
-    type=list,
+    type=int,
+    action='append',
     location=structure_key_item,
     store_missing=False,
 )

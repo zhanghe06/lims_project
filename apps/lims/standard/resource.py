@@ -112,8 +112,8 @@ class StandardResource(Resource):
                 'standard_id': pk,
                 'manner_id': manner_id,
             }
-            result = add_map_standard_manner(map_data)
-            if not result:
+            result_map_id = add_map_standard_manner(map_data)
+            if not result_map_id:
                 abort(BadRequest.code, message='创建失败', status=False)
         result = edit_standard(pk, request_data)
 
@@ -207,21 +207,21 @@ class StandardsResource(Resource):
 
         request_data = request_item_args
         manner_ids = request_data.pop('manner_id', [])  # 关联数据
-        result = add_standard(request_data)
+        result_standard_id = add_standard(request_data)
 
-        if not result:
+        if not result_standard_id:
             abort(BadRequest.code, message='创建失败', status=False)
         # 关联数据
         for manner_id in manner_ids:
             map_data = {
-                'standard_id': result,
+                'standard_id': result_standard_id,
                 'manner_id': manner_id,
             }
-            result = add_map_standard_manner(map_data)
-            if not result:
+            result_map_id = add_map_standard_manner(map_data)
+            if not result_map_id:
                 abort(BadRequest.code, message='创建失败', status=False)
         success_msg = SUCCESS_MSG.copy()
-        success_msg['id'] = result
+        success_msg['id'] = result_standard_id
         success_msg['message'] = '创建成功'
         return make_response(jsonify(success_msg), 200)
 
