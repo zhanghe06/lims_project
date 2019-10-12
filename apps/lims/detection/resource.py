@@ -110,30 +110,30 @@ class DetectionResource(Resource):
         success_msg['message'] = '更新成功'
         return make_response(jsonify(success_msg), 200)
 
-    # def delete(self, pk):
-    #     """
-    #     Example:
-    #         curl http://0.0.0.0:8000/detection/1 -X DELETE
-    #     :param pk:
-    #     :return:
-    #     """
-    #     # 是否存在
-    #     data = get_detection_row_by_id(pk)
-    #
-    #     if not data:
-    #         abort(NotFound.code, message='没有记录', status=False)
-    #     if data.status_delete == STATUS_DEL_OK:
-    #         abort(NotFound.code, message='已经删除', status=False)
-    #
-    #     # 删除数据
-    #     result = delete_detection(pk)
-    #
-    #     if not result:
-    #         abort(BadRequest.code, message='删除失败', status=False)
-    #
-    #     success_msg = SUCCESS_MSG.copy()
-    #     success_msg['message'] = '删除成功'
-    #     return make_response(jsonify(success_msg), 200)
+    def delete(self, pk):
+        """
+        Example:
+            curl http://0.0.0.0:8000/detection/1 -X DELETE
+        :param pk:
+        :return:
+        """
+        # 是否存在
+        data = get_detection_row_by_id(pk)
+
+        if not data:
+            abort(NotFound.code, message='没有记录', status=False)
+        if data.status_delete == STATUS_DEL_OK:
+            abort(NotFound.code, message='已经删除', status=False)
+
+        # 删除数据
+        result = delete_detection(pk)
+
+        if not result:
+            abort(BadRequest.code, message='删除失败', status=False)
+
+        success_msg = SUCCESS_MSG.copy()
+        success_msg['message'] = '删除成功'
+        return make_response(jsonify(success_msg), 200)
 
 
 class DetectionsResource(Resource):
@@ -212,6 +212,7 @@ class DetectionsResource(Resource):
 
     def put(self):
         """
+        根据子样编号修改数据
         Example:
             curl http://0.0.0.0:8000/detection -H "Content-Type: application/json" -X PUT -d '
             {

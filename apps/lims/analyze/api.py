@@ -95,8 +95,10 @@ def delete_analyze(analyze_id, force=False):
             'status_delete': STATUS_DEL_OK,
             'delete_time': datetime.datetime.now()
         }
-        return db_instance.update_rows(Analyze, data, Analyze.id.in_(analyze_id))
-        # return db_instance.edit(Analyze, analyze_id, data)
+        if isinstance(analyze_id, list):
+            return db_instance.update_rows(Analyze, data, Analyze.id.in_(analyze_id))
+        else:
+            return db_instance.edit(Analyze, analyze_id, data)
 
 
 def get_analyze_pagination(page=1, size=10, *args, **kwargs):

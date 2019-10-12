@@ -95,8 +95,10 @@ def delete_user(user_id, force=False):
             'status_delete': STATUS_DEL_OK,
             'delete_time': datetime.datetime.now()
         }
-        return db_instance.update_rows(User, data, User.id.in_(user_id))
-        # return db_instance.edit(User, user_id, data)
+        if isinstance(user_id, list):
+            return db_instance.update_rows(User, data, User.id.in_(user_id))
+        else:
+            return db_instance.edit(User, user_id, data)
 
 
 def get_user_pagination(page=1, size=10, *args, **kwargs):

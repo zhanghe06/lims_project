@@ -252,8 +252,12 @@ class DbInstance(object):
         model_pk_name = inspect(model_class).primary_key[0].name
         model_pk = getattr(model_class, model_pk_name)
         try:
-            model_obj = self.db_instance.session.query(model_class).filter(model_pk == pk_id)
-            result = model_obj.delete()
+            if isinstance(pk_id, list):
+                model_obj = self.db_instance.session.query(model_class).filter(model_pk.in_(pk_id))
+                result = model_obj.delete(synchronize_session=False)
+            else:
+                model_obj = self.db_instance.session.query(model_class).filter(model_pk == pk_id)
+                result = model_obj.delete()
             self.db_instance.session.commit()
             return result
         except Exception as e:

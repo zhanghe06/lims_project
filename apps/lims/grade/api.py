@@ -95,8 +95,10 @@ def delete_grade(grade_id, force=False):
             'status_delete': STATUS_DEL_OK,
             'delete_time': datetime.datetime.now()
         }
-        return db_instance.update_rows(Grade, data, Grade.id.in_(grade_id))
-        # return db_instance.edit(Grade, grade_id, data)
+        if isinstance(grade_id, list):
+            return db_instance.update_rows(Grade, data, Grade.id.in_(grade_id))
+        else:
+            return db_instance.edit(Grade, grade_id, data)
 
 
 def get_grade_pagination(page=1, size=10, *args, **kwargs):

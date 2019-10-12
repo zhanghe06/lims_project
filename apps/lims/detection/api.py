@@ -95,8 +95,10 @@ def delete_detection(detection_id, force=False):
             'status_delete': STATUS_DEL_OK,
             'delete_time': datetime.datetime.now()
         }
-        return db_instance.update_rows(Detection, data, Detection.id.in_(detection_id))
-        # return db_instance.edit(Detection, detection_id, data)
+        if isinstance(detection_id, list):
+            return db_instance.update_rows(Detection, data, Detection.id.in_(detection_id))
+        else:
+            return db_instance.edit(Detection, detection_id, data)
 
 
 def get_detection_pagination(page=1, size=10, *args, **kwargs):

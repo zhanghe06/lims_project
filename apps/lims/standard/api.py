@@ -95,8 +95,10 @@ def delete_standard(standard_id, force=False):
             'status_delete': STATUS_DEL_OK,
             'delete_time': datetime.datetime.now()
         }
-        return db_instance.update_rows(Standard, data, Standard.id.in_(standard_id))
-        # return db_instance.edit(Standard, standard_id, data)
+        if isinstance(standard_id, list):
+            return db_instance.update_rows(Standard, data, Standard.id.in_(standard_id))
+        else:
+            return db_instance.edit(Standard, standard_id, data)
 
 
 def get_standard_pagination(page=1, size=10, *args, **kwargs):

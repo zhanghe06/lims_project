@@ -95,8 +95,10 @@ def delete_applicant(applicant_id, force=False):
             'status_delete': STATUS_DEL_OK,
             'delete_time': datetime.datetime.now()
         }
-        return db_instance.update_rows(Applicant, data, Applicant.id.in_(applicant_id))
-        # return db_instance.edit(Applicant, applicant_id, data)
+        if isinstance(applicant_id, list):
+            return db_instance.update_rows(Applicant, data, Applicant.id.in_(applicant_id))
+        else:
+            return db_instance.edit(Applicant, applicant_id, data)
 
 
 def get_applicant_pagination(page=1, size=10, *args, **kwargs):

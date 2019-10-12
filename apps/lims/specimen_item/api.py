@@ -95,8 +95,10 @@ def delete_specimen_item(specimen_item_id, force=False):
             'status_delete': STATUS_DEL_OK,
             'delete_time': datetime.datetime.now()
         }
-        return db_instance.update_rows(SpecimenItem, data, SpecimenItem.id.in_(specimen_item_id))
-        # return db_instance.edit(SpecimenItem, specimen_item_id, data)
+        if isinstance(specimen_item_id, list):
+            return db_instance.update_rows(SpecimenItem, data, SpecimenItem.id.in_(specimen_item_id))
+        else:
+            return db_instance.edit(SpecimenItem, specimen_item_id, data)
 
 
 def get_specimen_item_pagination(page=1, size=10, *args, **kwargs):

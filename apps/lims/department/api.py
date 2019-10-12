@@ -95,8 +95,10 @@ def delete_department(department_id, force=False):
             'status_delete': STATUS_DEL_OK,
             'delete_time': datetime.datetime.now()
         }
-        return db_instance.update_rows(Department, data, Department.id.in_(department_id))
-        # return db_instance.edit(Department, department_id, data)
+        if isinstance(department_id, list):
+            return db_instance.update_rows(Department, data, Department.id.in_(department_id))
+        else:
+            return db_instance.edit(Department, department_id, data)
 
 
 def get_department_pagination(page=1, size=10, *args, **kwargs):

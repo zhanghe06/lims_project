@@ -95,8 +95,10 @@ def delete_map_standard_manner(map_standard_manner_id, force=False):
             'status_delete': STATUS_DEL_OK,
             'delete_time': datetime.datetime.now()
         }
-        return db_instance.update_rows(MapStandardManner, data, MapStandardManner.id.in_(map_standard_manner_id))
-        # return db_instance.edit(MapStandardManner, map_standard_manner_id, data)
+        if isinstance(map_standard_manner_id, list):
+            return db_instance.update_rows(MapStandardManner, data, MapStandardManner.id.in_(map_standard_manner_id))
+        else:
+            return db_instance.edit(MapStandardManner, map_standard_manner_id, data)
 
 
 def get_map_standard_manner_pagination(page=1, size=10, *args, **kwargs):

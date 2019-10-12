@@ -95,8 +95,10 @@ def delete_manner(manner_id, force=False):
             'status_delete': STATUS_DEL_OK,
             'delete_time': datetime.datetime.now()
         }
-        return db_instance.update_rows(Manner, data, Manner.id.in_(manner_id))
-        # return db_instance.edit(Manner, manner_id, data)
+        if isinstance(manner_id, list):
+            return db_instance.update_rows(Manner, data, Manner.id.in_(manner_id))
+        else:
+            return db_instance.edit(Manner, manner_id, data)
 
 
 def get_manner_pagination(page=1, size=10, *args, **kwargs):

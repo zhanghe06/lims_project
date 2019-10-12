@@ -136,6 +136,7 @@ request_delete = request_parser_item.copy()
 
 request_delete.add_argument(
     name='id',
+    type=list,
     location=structure_key_item,
     store_missing=False,
     required=True,

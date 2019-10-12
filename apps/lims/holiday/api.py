@@ -95,8 +95,10 @@ def delete_holiday(holiday_id, force=False):
             'status_delete': STATUS_DEL_OK,
             'delete_time': datetime.datetime.now()
         }
-        return db_instance.update_rows(Holiday, data, Holiday.id.in_(holiday_id))
-        # return db_instance.edit(Holiday, holiday_id, data)
+        if isinstance(holiday_id, list):
+            return db_instance.update_rows(Holiday, data, Holiday.id.in_(holiday_id))
+        else:
+            return db_instance.edit(Holiday, holiday_id, data)
 
 
 def get_holiday_pagination(page=1, size=10, *args, **kwargs):
