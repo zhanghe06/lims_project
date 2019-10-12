@@ -203,6 +203,9 @@ class DbInstance(object):
         :param data:
         :return: Value of PK
         """
+        current_time = datetime.now()
+        data['create_time'] = data.pop('create_time', current_time)
+        data['update_time'] = data.pop('update_time', current_time)
         model_obj = model_class(**data)
         try:
             r = self.db_instance.session.merge(model_obj)
@@ -231,6 +234,7 @@ class DbInstance(object):
                 field: value
             }
             data.update(**kwargs)  # 更新扩展字段
+            data['update_time'] = data.pop('update_time', datetime.now())
             result = model_obj.update(data)
             self.db_instance.session.commit()
             return result
@@ -337,6 +341,10 @@ class DbInstance(object):
         :return:
         """
         try:
+            for data in data_list:
+                current_time = datetime.now()
+                data['create_time'] = data.pop('create_time', current_time)
+                data['update_time'] = data.pop('update_time', current_time)
             result = self.db_instance.session.execute(model_class.__table__.insert().prefix_with('IGNORE'), data_list)
             self.db_instance.session.commit()
             return result.rowcount
@@ -355,6 +363,7 @@ class DbInstance(object):
         """
         try:
             model_obj = self.db_instance.session.query(model_class).filter(*args).filter_by(**kwargs)
+            data['update_time'] = data.pop('update_time', datetime.now())
             result = model_obj.update(data, synchronize_session=False)
             self.db_instance.session.commit()
             return result
@@ -369,6 +378,7 @@ class DbInstance(object):
         model_pk = inspect(model_class).primary_key[0]
         try:
             model_obj = self.db_instance.session.query(model_class).filter(model_pk.in_(pk_ids))
+            data['update_time'] = data.pop('update_time', datetime.now())
             result = model_obj.update(data, synchronize_session=False)
             self.db_instance.session.commit()
             return result
