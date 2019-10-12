@@ -222,7 +222,7 @@ class SpecimenItemsResource(Resource):
             abort(BadRequest.code, message='参数错误', status=False)
 
         request_data = request_item_args
-        result = delete_specimen_item(request_data['id'], force=True)
+        result = delete_specimen_item(request_data['id'])
 
         if not result:
             abort(BadRequest.code, message='删除失败', status=False)

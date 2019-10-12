@@ -187,7 +187,8 @@ class DbInstance(object):
         model_pk = getattr(model_class, model_pk_name)
         try:
             model_obj = self.db_instance.session.query(model_class).filter(model_pk == pk_id)
-            data['update_time'] = data.pop('update_time', datetime.now())
+            if 'status_delete' not in data:
+                data['update_time'] = data.pop('update_time', datetime.now())
             result = model_obj.update(data)
             self.db_instance.session.commit()
             return result
@@ -367,7 +368,8 @@ class DbInstance(object):
         """
         try:
             model_obj = self.db_instance.session.query(model_class).filter(*args).filter_by(**kwargs)
-            data['update_time'] = data.pop('update_time', datetime.now())
+            if 'status_delete' not in data:
+                data['update_time'] = data.pop('update_time', datetime.now())
             result = model_obj.update(data, synchronize_session=False)
             self.db_instance.session.commit()
             return result
@@ -382,7 +384,8 @@ class DbInstance(object):
         model_pk = inspect(model_class).primary_key[0]
         try:
             model_obj = self.db_instance.session.query(model_class).filter(model_pk.in_(pk_ids))
-            data['update_time'] = data.pop('update_time', datetime.now())
+            if 'status_delete' not in data:
+                data['update_time'] = data.pop('update_time', datetime.now())
             result = model_obj.update(data, synchronize_session=False)
             self.db_instance.session.commit()
             return result
