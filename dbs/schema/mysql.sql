@@ -113,7 +113,7 @@ CREATE TABLE `company` (
   `tel` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '单位电话',
   `fax` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '单位传真',
   `email` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '单位邮箱',
-  `type` TINYINT NOT NULL DEFAULT 0 COMMENT '单位类型（1:工商局,2:客户）',
+  `type` TINYINT NOT NULL DEFAULT 0 COMMENT '单位类型（1:监管机构,2:客户）',
   `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '单位备注',
   `status_locked` TINYINT NOT NULL DEFAULT 0 COMMENT '锁定状态（0:未锁定,1:已锁定）',
   `status_delete` TINYINT NOT NULL DEFAULT 0 COMMENT '删除状态（0:未删除,1:已删除）',
@@ -245,6 +245,7 @@ CREATE TABLE `standard` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `code` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '标准编号',
   `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '标准名称',
+  `item_name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '内部名称',
   `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '备注',
   `status_delete` TINYINT NOT NULL DEFAULT 0 COMMENT '删除状态（0:未删除,1:已删除）',
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
@@ -303,13 +304,17 @@ CREATE TABLE `analyze` (
 DROP TABLE IF EXISTS `log_operation`;
 CREATE TABLE `log_operation` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `operation_uid` INT NOT NULL DEFAULT 0 COMMENT '操作用户',
+  `type_operation` INT NOT NULL DEFAULT 0 COMMENT '操作类型（1:创建,2:更新,3:删除）',
+  `result` INT NOT NULL DEFAULT 0 COMMENT '操作结果（1:成功,2:失败）',
+  `type_source` INT NOT NULL DEFAULT 0 COMMENT '来源类型（1:受理,2:样品,3:测试,4:报告）',
   `source_id` INT NOT NULL DEFAULT 0 COMMENT '来源ID',
-  `source_type` INT NOT NULL DEFAULT 0 COMMENT '来源类型（1:受理,2:样品,3:测试,4:报告）',
   `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '备注',
   `status_delete` TINYINT NOT NULL DEFAULT 0 COMMENT '删除状态（0:未删除,1:已删除）',
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY (`source_id`, `source_type`)
+  KEY (`operation_uid`),
+  KEY (`source_id`, `type_source`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';

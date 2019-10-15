@@ -14,7 +14,7 @@ from uuid import uuid4
 
 from flask import jsonify, request, g, make_response
 from werkzeug.exceptions import NotFound, InternalServerError
-
+from apps.signals.operation_log import signal_operation_log
 from apps import app
 
 SUCCESS_MSG = app.config['SUCCESS_MSG'].copy()
@@ -22,12 +22,24 @@ SUCCESS_MSG = app.config['SUCCESS_MSG'].copy()
 
 @app.before_request
 def api_before_request():
-    g.request_id = request.headers.get('X-Request-Id', uuid4().get_hex())
+    g.request_id = request.headers.get('X-Request-Id', str(uuid4()))  # 不带短横: uuid4().get_hex()
 
 
 @app.after_request
 def append_request_id(response):
+    # 头部注入
     response.headers.add('X-Request-Id', g.request_id)
+
+    # 操作日志
+    if request.method in ['POST', 'PUT', 'DELETE']:
+        operation_log = {
+            'req_method': request.method,
+            'req_path': request.path,
+            'req_json': request.json,
+            'req_view_args': request.view_args,
+            'res_status_code': response.status_code,
+        }
+        signal_operation_log.send(app, **operation_log)
     return response
 
 

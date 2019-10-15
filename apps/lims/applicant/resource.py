@@ -29,6 +29,7 @@ from apps.lims.applicant.request import (
     request_put,
     request_delete,
 )
+from apps.models.model_lims import Applicant
 from apps.lims.applicant.response import fields_item
 from apps.maps.status_delete import STATUS_DEL_OK, STATUS_DEL_NO
 
@@ -146,13 +147,22 @@ class ApplicantsResource(Resource):
         filter_parser = reqparse.RequestParser(bundle_errors=True)
         filter_parser.add_argument('page', type=int, default=DEFAULT_PAGE, location='args')
         filter_parser.add_argument('size', type=int, default=DEFAULT_SITE, location='args')
+        filter_parser.add_argument('code', store_missing=False, location='args')
         filter_parser_args = filter_parser.parse_args()
 
         if not filter_parser_args:
             abort(BadRequest.code, message='参数错误', status=False)
 
+        filter_args = []
+        code = filter_parser_args.pop('code', '')
+        if code:
+            filter_args.append(Applicant.code.like('%%%s%%' % code))
+
+        filter_parser_args['status_delete'] = STATUS_DEL_NO
         pagination_obj = get_applicant_pagination(
-            status_delete=STATUS_DEL_NO,
+            filter_parser_args.pop('page'),
+            filter_parser_args.pop('size'),
+            *filter_args,
             **filter_parser_args
         )
 

@@ -37,6 +37,11 @@ request_post.add_argument(
     help='名称必填',
 )
 request_post.add_argument(
+    name='item_name',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_post.add_argument(
     name='note',
     location=structure_key_item,
     store_missing=False,
@@ -59,6 +64,11 @@ request_put.add_argument(
 )
 request_put.add_argument(
     name='name',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
+    name='item_name',
     location=structure_key_item,
     store_missing=False,
 )

@@ -46,6 +46,13 @@ request_post.add_argument(
     location=structure_key_item,
     store_missing=False,
 )
+request_post.add_argument(
+    name='analyze',
+    type=dict,
+    action='append',
+    location=structure_key_item,
+    store_missing=False,
+)
 
 # PUT
 request_put = request_parser_item.copy()
@@ -67,6 +74,13 @@ request_put.add_argument(
 )
 request_put.add_argument(
     name='note',
+    location=structure_key_item,
+    store_missing=False,
+)
+request_put.add_argument(
+    name='analyze',
+    type=dict,
+    action='append',
     location=structure_key_item,
     store_missing=False,
 )

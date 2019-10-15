@@ -22,6 +22,14 @@ from apps.lims.manner.api import (
     add_manner,
     edit_manner,
 )
+from apps.lims.analyze.api import (
+    get_analyze_row_by_id,
+    delete_analyze,
+    get_analyze_pagination,
+    add_analyze,
+    edit_analyze,
+    get_analyze_rows,
+)
 from apps.lims.manner.request import (
     structure_key_item,
     request_parser,
@@ -87,6 +95,10 @@ class MannerResource(Resource):
 
         if not request_item_args:
             abort(BadRequest.code, message='参数错误', status=False)
+        analyze_list_args = request_item_args.pop('analyze', [])
+        for analyze_item_args in analyze_list_args:
+            if {'property', 'sort_code'} != set(analyze_item_args.keys()):
+                abort(BadRequest.code, message='参数错误', status=False)
 
         # 是否存在
         data = get_manner_row_by_id(pk)
@@ -102,6 +114,20 @@ class MannerResource(Resource):
 
         if not result:
             abort(NotFound.code, message='更新失败', status=False)
+
+        # 1. 清除历史
+        analyze_rows = get_analyze_rows(**{'manner_id': pk, 'status_delete': STATUS_DEL_NO})
+        analyze_ids = [analyze_row.id for analyze_row in analyze_rows]
+        if analyze_ids:
+            result = delete_analyze(analyze_ids)
+            if not result:
+                abort(BadRequest.code, message='删除失败', status=False)
+        # 2. 新增更新
+        for analyze_data in analyze_list_args:
+            analyze_data['manner_id'] = pk
+            result_analyze_id = add_analyze(analyze_data)
+            if not result_analyze_id:
+                abort(BadRequest.code, message='创建失败', status=False)
 
         success_msg = SUCCESS_MSG.copy()
         success_msg['message'] = '更新成功'
@@ -193,15 +219,25 @@ class MannersResource(Resource):
 
         if not request_item_args:
             abort(BadRequest.code, message='参数错误', status=False)
+        analyze_list_args = request_item_args.pop('analyze', [])
+        for analyze_item_args in analyze_list_args:
+            if {'property', 'sort_code'} != set(analyze_item_args.keys()):
+                abort(BadRequest.code, message='参数错误', status=False)
 
         request_data = request_item_args
-        result = add_manner(request_data)
+        result_manner_id = add_manner(request_data)
 
-        if not result:
+        if not result_manner_id:
             abort(BadRequest.code, message='创建失败', status=False)
 
+        for analyze_data in analyze_list_args:
+            analyze_data['manner_id'] = result_manner_id
+            result_analyze_id = add_analyze(analyze_data)
+            if not result_analyze_id:
+                abort(BadRequest.code, message='创建失败', status=False)
+
         success_msg = SUCCESS_MSG.copy()
-        success_msg['id'] = result
+        success_msg['id'] = result_manner_id
         success_msg['message'] = '创建成功'
         return make_response(jsonify(success_msg), 200)
 

@@ -160,12 +160,15 @@ class Laboratory(Base):
 class LogOperation(Base):
     __tablename__ = 'log_operation'
     __table_args__ = (
-        Index('source_id', 'source_id', 'source_type'),
+        Index('source_id', 'source_id', 'type_source'),
     )
 
     id = Column(Integer, primary_key=True)
+    operation_uid = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
+    type_operation = Column(Integer, nullable=False, server_default=text("'0'"))
+    result = Column(Integer, nullable=False, server_default=text("'0'"))
+    type_source = Column(Integer, nullable=False, server_default=text("'0'"))
     source_id = Column(Integer, nullable=False, server_default=text("'0'"))
-    source_type = Column(Integer, nullable=False, server_default=text("'0'"))
     note = Column(String(256), nullable=False, server_default=text("''"))
     status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
     delete_time = Column(DateTime)
@@ -244,6 +247,7 @@ class Standard(Base):
     id = Column(Integer, primary_key=True)
     code = Column(String(100), nullable=False, server_default=text("''"))
     name = Column(String(100), nullable=False, server_default=text("''"))
+    item_name = Column(String(100), nullable=False, server_default=text("''"))
     note = Column(String(256), nullable=False, server_default=text("''"))
     status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
     delete_time = Column(DateTime)
