@@ -21,6 +21,7 @@ from apps.lims.specimen_item.api import (
     get_specimen_item_pagination,
     add_specimen_item,
     edit_specimen_item,
+    get_specimen_item_rows,
 )
 from apps.lims.detection.api import (
     get_detection_row_by_id,
@@ -38,6 +39,7 @@ from apps.lims.specimen_item.request import (
     request_delete,
     request_clone,
 )
+from libs.code import gen_code_uppercase
 from apps.lims.specimen_item.response import fields_item
 from apps.maps.status_delete import STATUS_DEL_OK, STATUS_DEL_NO
 
@@ -46,6 +48,18 @@ DEFAULT_SITE = app.config['DEFAULT_SITE']
 
 SUCCESS_MSG = app.config['SUCCESS_MSG']
 FAILURE_MSG = app.config['FAILURE_MSG']
+
+
+def _update_code(applicant_id):
+    specimen_item_rows = get_specimen_item_rows(**{
+        'applicant_id': applicant_id,
+        'status_delete': STATUS_DEL_NO,
+    })
+    specimen_item_ids = [item.id for item in specimen_item_rows]
+    code_list = gen_code_uppercase(m=len(specimen_item_ids))
+    code_list.reverse()
+    for i, specimen_item_id in enumerate(specimen_item_ids):
+        edit_specimen_item(specimen_item_id, {'code': code_list[i]})
 
 
 class SpecimenItemResource(Resource):
@@ -198,6 +212,10 @@ class SpecimenItemsResource(Resource):
         if not result:
             abort(BadRequest.code, message='创建失败', status=False)
 
+        # TODO 更新编号
+        applicant_id = request_data['applicant_id']
+        _update_code(applicant_id)
+
         success_msg = SUCCESS_MSG.copy()
         success_msg['id'] = result
         success_msg['message'] = '创建成功'
@@ -222,10 +240,22 @@ class SpecimenItemsResource(Resource):
             abort(BadRequest.code, message='参数错误', status=False)
 
         request_data = request_item_args
+
+        specimen_item_row = get_specimen_item_row_by_id(request_data['id'])
+
+        if not specimen_item_row:
+            abort(NotFound.code, message='没有记录', status=False)
+        if specimen_item_row.status_delete == STATUS_DEL_OK:
+            abort(NotFound.code, message='已经删除', status=False)
+
         result = delete_specimen_item(request_data['id'])
 
         if not result:
             abort(BadRequest.code, message='删除失败', status=False)
+
+        # TODO 更新编号
+        applicant_id = specimen_item_row.applicant_id
+        _update_code(applicant_id)
 
         success_msg = SUCCESS_MSG.copy()
         success_msg['message'] = '删除成功'
@@ -259,13 +289,13 @@ class SpecimenCloneResource(Resource):
 
         request_data = request_item_args
         # 克隆子样
-        specimen_row = get_specimen_item_row_by_id(request_data['id'])
-        if not specimen_row:
+        specimen_item_row = get_specimen_item_row_by_id(request_data['id'])
+        if not specimen_item_row:
             abort(NotFound.code, message='没有记录', status=False)
-        if specimen_row.status_delete == STATUS_DEL_OK:
+        if specimen_item_row.status_delete == STATUS_DEL_OK:
             abort(NotFound.code, message='已经删除', status=False)
 
-        specimen_data = specimen_row.to_dict()
+        specimen_data = specimen_item_row.to_dict()
         specimen_data.pop('id', 0)
         specimen_data.pop('note', '')
         specimen_data.pop('create_time', None)
@@ -287,6 +317,11 @@ class SpecimenCloneResource(Resource):
             result = add_detection(detection_data)
             if not result:
                 abort(BadRequest.code, message='克隆分配失败', status=False)
+
+        # TODO 更新编号
+        applicant_id = specimen_item_row.applicant_id
+        _update_code(applicant_id)
+
         success_msg = SUCCESS_MSG.copy()
         success_msg['id'] = result_specimen_item_id
         success_msg['message'] = '克隆成功'
