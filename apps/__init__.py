@@ -34,7 +34,7 @@ from apps.lims.grade import url
 from apps.lims.holiday import url
 from apps.lims.laboratory import url
 from apps.lims.manner import url
-from apps.lims.specimen import url
+# from apps.lims.specimen import url  # 废弃
 from apps.lims.specimen_item import url
 from apps.lims.standard import url
 from apps.lims.user import url
