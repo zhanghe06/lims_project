@@ -16,6 +16,7 @@ fields_item = {
     'id': fields.Integer(attribute='id'),
     'code': fields.String(attribute='code'),
     'name': fields.String(attribute='name'),
+    'item_name': fields.String(attribute='item_name'),
     'note': fields.String(attribute='note'),
     'create_time': fields.DateTime(dt_format=b'iso8601'),
     'update_time': fields.DateTime(dt_format=b'iso8601'),
