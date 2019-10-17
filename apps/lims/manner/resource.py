@@ -45,6 +45,7 @@ from apps.lims.map_standard_manner.api import (
 )
 from apps.lims.manner.response import fields_item
 from apps.maps.status_delete import STATUS_DEL_OK, STATUS_DEL_NO
+from apps.models.model_lims import Manner
 
 DEFAULT_PAGE = app.config['DEFAULT_PAGE']
 DEFAULT_SITE = app.config['DEFAULT_SITE']
@@ -184,17 +185,24 @@ class MannersResource(Resource):
         if not filter_parser_args:
             abort(BadRequest.code, message='参数错误', status=False)
 
+        filter_args = []
         standard_id = filter_parser_args.pop('standard_id', 0)
         if standard_id:
             map_rows = get_map_standard_manner_rows(**{'standard_id': standard_id})
             manner_ids = [map_row.manner_id for map_row in map_rows]
+            filter_args.append(Manner.id.in_(manner_ids))
 
+        filter_parser_args['status_delete'] = STATUS_DEL_NO
         pagination_obj = get_manner_pagination(
-            status_delete=STATUS_DEL_NO,
+            filter_parser_args.pop('page'),
+            filter_parser_args.pop('size'),
+            *filter_args,
             **filter_parser_args
         )
 
         result = marshal(pagination_obj.items, fields_item, envelope=structure_key_item)
+        for i in result[structure_key_item]:
+            i['standard_id'] = standard_id
         result['total'] = pagination_obj.total
         return jsonify(result)
 
