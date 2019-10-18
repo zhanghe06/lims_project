@@ -29,6 +29,13 @@ def __default(obj):
         raise TypeError('%r is not JSON serializable' % obj)
 
 
+def get_week(day=None):
+    """获取星期"""
+    if not day:
+        return datetime.datetime.now().weekday() + 1
+    return datetime.datetime.strptime(day, '%Y-%m-%d').weekday() + 1
+
+
 def delta_date(day, delta_day=1):
     """变更日期"""
     nex_day_obj = datetime.datetime.strptime(day, '%Y-%m-%d') + datetime.timedelta(days=delta_day)
@@ -86,7 +93,7 @@ def get_holiday_days(year=None):
     return days
 
 
-def get_delta_date(delta_day=1, start_day=None, skip_holiday=False):
+def get_delta_date(delta_day=1, start_day=None, skip_holiday=False, holiday_days=None):
     """
     get_delta_date(10, '2018-11-24') -> '2018-12-04'
     get_delta_date(10, '2019-11-24') -> '2019-12-04'
@@ -95,6 +102,7 @@ def get_delta_date(delta_day=1, start_day=None, skip_holiday=False):
     :param delta_day:
     :param start_day:
     :param skip_holiday:
+    :param holiday_days:
     :return:
     """
     if not start_day:
@@ -107,7 +115,7 @@ def get_delta_date(delta_day=1, start_day=None, skip_holiday=False):
 
     year_days = get_year_days(year)
     if skip_holiday:
-        holiday_days = get_holiday_days(year)
+        holiday_days = holiday_days or get_holiday_days(year)
         year_days = difference_days(year_days, holiday_days)
     while 1:
         try:
@@ -126,7 +134,7 @@ def get_delta_date(delta_day=1, start_day=None, skip_holiday=False):
         nex_year = datetime.datetime.now().year + c
         nex_year_days = get_year_days(nex_year)
         if skip_holiday:
-            nex_holiday_days = get_holiday_days(year)
+            nex_holiday_days = holiday_days or get_holiday_days(year)
             nex_year_days = difference_days(nex_year_days, nex_holiday_days)
         year_days = union_days(year_days, nex_year_days)
         c += 1
@@ -146,6 +154,8 @@ def print_today_year_calendar():
 
 if __name__ == '__main__':
     # get_year_days()
+    print(get_week())
+    print(get_week('2019-10-20'))
     print(delta_date('2019-11-24', 10))
     print(get_delta_date(10))  # 不指定日期
     print(get_delta_date(10, '2018-11-24'))  # 去年

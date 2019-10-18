@@ -14,8 +14,7 @@ from flask import jsonify, make_response
 from flask_restful import Resource, marshal, reqparse, abort
 from werkzeug.exceptions import NotFound, BadRequest
 import datetime
-import calendar
-from libs.calendar_days import get_delta_date
+from libs.calendar_days import get_delta_date, get_week
 from apps import app
 from apps.lims.calendar.api import (
     get_calendar_row_by_id,
@@ -23,6 +22,7 @@ from apps.lims.calendar.api import (
     get_calendar_pagination,
     add_calendar,
     edit_calendar,
+    get_calendar_rows,
 )
 from apps.lims.calendar.request import (
     structure_key_item,
@@ -72,7 +72,9 @@ class CalendarResource(Resource):
             curl http://0.0.0.0:8000/calendar/1 -H "Content-Type: application/json" -X PUT -d '
             {
                 "calendar": {
-                    "name": "calendar name put"
+                    "name": "周六出去玩",
+                    "date": "2019-10-19",
+                    "status_holiday": true
                 }
             }'
         :param pk:
@@ -94,6 +96,7 @@ class CalendarResource(Resource):
 
         # 更新数据
         request_data = request_item_args
+        request_data['week'] = get_week(request_data['date'])
         result = edit_calendar(pk, request_data)
 
         if not result:
@@ -168,12 +171,9 @@ class CalendarsResource(Resource):
             curl http://0.0.0.0:8000/calendar -H "Content-Type: application/json" -X POST -d '
             {
                 "calendar": {
-                    "name": "tom",
-                    "salutation": "先生",
-                    "mobile": "http://www.baidu.com",
-                    "tel": "021-62345678",
-                    "fax": "021-62345678",
-                    "email": "haha@haha.com"
+                    "name": "周六",
+                    "date": "2019-10-19",
+                    "status_holiday": true
                 }
             }'
         :return:
@@ -185,6 +185,7 @@ class CalendarsResource(Resource):
             abort(BadRequest.code, message='参数错误', status=False)
 
         request_data = request_item_args
+        request_data['week'] = get_week(request_data['date'])
         result = add_calendar(request_data)
 
         if not result:
@@ -251,10 +252,17 @@ class CalendarDateDeltaResource(Resource):
         if not filter_parser_args['current_day']:
             filter_parser_args['current_day'] = datetime.datetime.now().date().strftime('%Y-%m-%d')
 
+        # todo
+        holiday_rows = get_calendar_rows(**{
+            'status_holiday': 1,
+            'status_delete': 0,
+        })
+        holiday_days = [holiday_row.date.strftime('%Y-%m-%d') for holiday_row in holiday_rows]
         date_delta = get_delta_date(
             filter_parser_args['delta_day'],
             filter_parser_args['current_day'],
             True,
+            holiday_days,
         )
 
         success_msg = SUCCESS_MSG.copy()
