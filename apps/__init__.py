@@ -26,12 +26,13 @@ app.register_blueprint(bp_lims)
 from apps import urls
 from apps.lims.analyze import url
 from apps.lims.applicant import url
+from apps.lims.calendar import url
 from apps.lims.company import url
 from apps.lims.contact import url
 from apps.lims.department import url
 from apps.lims.detection import url
 from apps.lims.grade import url
-from apps.lims.holiday import url
+# from apps.lims.holiday import url
 from apps.lims.laboratory import url
 from apps.lims.manner import url
 # from apps.lims.specimen import url  # 废弃

@@ -53,6 +53,20 @@ class Applicant(Base):
     update_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"))
 
 
+class Calendar(Base):
+    __tablename__ = 'calendar'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100), nullable=False, server_default=text("''"))
+    date = Column(Date, nullable=False, server_default=text("'0000-00-00'"))
+    week = Column(Integer, nullable=False, server_default=text("'0'"))
+    status_holiday = Column(Integer, nullable=False, server_default=text("'0'"))
+    status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
+    delete_time = Column(DateTime)
+    create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP"))
+    update_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"))
+
+
 class Company(Base):
     __tablename__ = 'company'
 
