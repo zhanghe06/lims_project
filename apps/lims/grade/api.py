@@ -12,7 +12,7 @@ import datetime
 
 from apps.databases.db_lims import db_lims
 from apps.maps.status_delete import STATUS_DEL_OK
-from apps.models.model_lims import Grade
+from apps.models.model_lims import SampleGrade as Grade
 from libs.db_orm_pk import DbInstance
 
 db_instance = DbInstance(db_lims)

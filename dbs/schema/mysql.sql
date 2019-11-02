@@ -4,9 +4,9 @@
 
 -- DROP DATABASE IF EXISTS `lims_project`;
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `lims_project` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `lims_project_dev` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 
-USE `lims_project`;
+USE `lims_project_dev`;
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
@@ -77,8 +77,8 @@ CREATE TABLE `department` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='部门表';
 
 
-DROP TABLE IF EXISTS `grade`;
-CREATE TABLE `grade` (
+DROP TABLE IF EXISTS `sample_grade`;
+CREATE TABLE `sample_grade` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '名称',
   `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '备注',
@@ -140,8 +140,8 @@ CREATE TABLE `company` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='单位表';
 
 
-DROP TABLE IF EXISTS `contact`;
-CREATE TABLE `contact` (
+DROP TABLE IF EXISTS `report_contact`;
+CREATE TABLE `report_contact` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `cid` INT NOT NULL DEFAULT 0 COMMENT '单位ID',
   `name` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '姓名',
@@ -159,22 +159,22 @@ CREATE TABLE `contact` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='联系人表';
 
 
-DROP TABLE IF EXISTS `applicant`;
-CREATE TABLE `applicant` (
+DROP TABLE IF EXISTS `report_info`;
+CREATE TABLE `report_info` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `code` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '委托编号',
+  `report_no` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '委托编号',
   `receiver_uid` INT NOT NULL DEFAULT 0 COMMENT '受理人ID',
-  `applicant_cid` INT NOT NULL DEFAULT 0 COMMENT '委托单位ID',
-  `applicant_uid` INT NOT NULL DEFAULT 0 COMMENT '委托用户ID',
-  `detection_cid` INT NOT NULL DEFAULT 0 COMMENT '受检单位ID',
-  `type_detection` TINYINT NOT NULL DEFAULT 0 COMMENT '检测类型（1:抽检,2:自测）',
-  `type_test` TINYINT NOT NULL DEFAULT 0 COMMENT '测试类型（1:产品标准,2:方法测试）',
-  `grade_id` TINYINT NOT NULL DEFAULT 0 COMMENT '样品等级（1:A级,2:B级,3:C级,4:D级）',
-  `summary` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '样品数量',
-  `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '样品描述',
-  `style` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '款号',
-  `sku` VARCHAR(100) NOT NULL DEFAULT '' COMMENT 'SKU',
-  `brand` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '商标',
+  `submitter_cid` INT NOT NULL DEFAULT 0 COMMENT '委托单位ID',
+  `submitter_uid` INT NOT NULL DEFAULT 0 COMMENT '委托用户ID',
+  `be_inspected_entity_cid` INT NOT NULL DEFAULT 0 COMMENT '受检单位ID',
+  `inspection_type` TINYINT NOT NULL DEFAULT 0 COMMENT '检测类型（1:抽检,2:自测）',
+  `test_type` TINYINT NOT NULL DEFAULT 0 COMMENT '测试类型（1:产品标准,2:方法测试）',
+  `sample_grade_id` TINYINT NOT NULL DEFAULT 0 COMMENT '样品等级（1:A级,2:B级,3:C级,4:D级）',
+  `sample_quantity` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '样品数量',
+  `sample_description` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '样品描述',
+  `style_number` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '款号',
+  `sku_number` VARCHAR(100) NOT NULL DEFAULT '' COMMENT 'SKU',
+  `sample_brand` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '商标',
   `period` INT NOT NULL DEFAULT 0 COMMENT '检测周期（工作日）',
   `req_date` DATE NOT NULL DEFAULT '0000-00-00' COMMENT '要求完成日期',
   `arr_date` DATE NOT NULL DEFAULT '0000-00-00' COMMENT '样品到达日期',
@@ -184,14 +184,14 @@ CREATE TABLE `applicant` (
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY (`receiver_uid`),
-  KEY (`applicant_cid`),
-  KEY (`applicant_uid`),
-  KEY (`detection_cid`)
+  KEY (`submitter_cid`),
+  KEY (`submitter_uid`),
+  KEY (`be_inspected_entity_cid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='委托申请表';
 
 
-DROP TABLE IF EXISTS `specimen`;
-CREATE TABLE `specimen` (
+DROP TABLE IF EXISTS `report_sample`;
+CREATE TABLE `report_sample` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `code` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '样品编号',
   `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '样品名称',
@@ -214,8 +214,8 @@ CREATE TABLE `specimen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='样品表';
 
 
-DROP TABLE IF EXISTS `specimen_item`;
-CREATE TABLE `specimen_item` (
+DROP TABLE IF EXISTS `report_sub_sample`;
+CREATE TABLE `report_sub_sample` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `code` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '子样编号',
   `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '子样名称',
@@ -234,8 +234,8 @@ CREATE TABLE `specimen_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='子样表';
 
 
-DROP TABLE IF EXISTS `detection`;
-CREATE TABLE `detection` (
+DROP TABLE IF EXISTS `sample_tested_items`;
+CREATE TABLE `sample_tested_items` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `code` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '检测编号',
   `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '检测名称',
@@ -255,8 +255,8 @@ CREATE TABLE `detection` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='检测表';
 
 
-DROP TABLE IF EXISTS `standard`;
-CREATE TABLE `standard` (
+DROP TABLE IF EXISTS `protocol`;
+CREATE TABLE `protocol` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `code` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '标准编号',
   `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '标准名称',
@@ -270,8 +270,8 @@ CREATE TABLE `standard` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='标准表';
 
 
-DROP TABLE IF EXISTS `manner`;
-CREATE TABLE `manner` (
+DROP TABLE IF EXISTS `test_method`;
+CREATE TABLE `test_method` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `code` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '方法编号',
   `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '方法名称',
@@ -285,8 +285,8 @@ CREATE TABLE `manner` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='方法表';
 
 
-DROP TABLE IF EXISTS `map_standard_manner`;
-CREATE TABLE `map_standard_manner` (
+DROP TABLE IF EXISTS `protocol_and_method_relation`;
+CREATE TABLE `protocol_and_method_relation` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `standard_id` INT NOT NULL DEFAULT 0 COMMENT '标准ID',
   `manner_id` INT NOT NULL DEFAULT 0 COMMENT '方法ID',
@@ -301,10 +301,10 @@ CREATE TABLE `map_standard_manner` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='标准方法对应表';
 
 
-DROP TABLE IF EXISTS `analyze`;
-CREATE TABLE `analyze` (
+DROP TABLE IF EXISTS `test_property`;
+CREATE TABLE `test_property` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `manner_id` INT NOT NULL DEFAULT 0 COMMENT '方法ID',
+  `test_method_id` INT NOT NULL DEFAULT 0 COMMENT '方法ID',
   `property` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '属性',
   `sort_code` TINYINT NOT NULL DEFAULT 0 COMMENT '排序编码',
   `status_delete` TINYINT NOT NULL DEFAULT 0 COMMENT '删除状态（0:未删除,1:已删除）',
@@ -312,7 +312,7 @@ CREATE TABLE `analyze` (
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY (`manner_id`)
+  KEY (`test_method_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='分析表';
 
 

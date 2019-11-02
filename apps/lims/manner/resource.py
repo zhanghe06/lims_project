@@ -45,7 +45,7 @@ from apps.lims.map_standard_manner.api import (
 )
 from apps.lims.manner.response import fields_item
 from apps.maps.status_delete import STATUS_DEL_OK, STATUS_DEL_NO
-from apps.models.model_lims import Manner
+from apps.models.model_lims import TestMethod as Manner
 
 DEFAULT_PAGE = app.config['DEFAULT_PAGE']
 DEFAULT_SITE = app.config['DEFAULT_SITE']

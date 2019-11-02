@@ -36,7 +36,7 @@ DB_MYSQL = {
     'user': 'root',
     'passwd': '123456',
     'port': 3306,
-    'db': 'lims_project'
+    'db': 'lims_project_dev'
 }
 
 SQLALCHEMY_DATABASE_URI = \

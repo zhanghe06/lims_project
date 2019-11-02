@@ -31,6 +31,7 @@ request_post.add_argument(
 )
 request_post.add_argument(
     name='applicant_cid',
+    dest='submitter_cid',
     location=structure_key_item,
     store_missing=False,
     required=True,
@@ -38,6 +39,7 @@ request_post.add_argument(
 )
 request_post.add_argument(
     name='applicant_uid',
+    dest='submitter_uid',
     location=structure_key_item,
     store_missing=False,
     required=True,
@@ -45,11 +47,13 @@ request_post.add_argument(
 )
 request_post.add_argument(
     name='detection_cid',
+    dest='be_inspected_entity_cid',
     location=structure_key_item,
     store_missing=False,
 )
 request_post.add_argument(
     name='type_detection',
+    dest='inspection_type',
     location=structure_key_item,
     store_missing=False,
     required=True,
@@ -57,6 +61,7 @@ request_post.add_argument(
 )
 request_post.add_argument(
     name='type_test',
+    dest='test_type',
     location=structure_key_item,
     store_missing=False,
     required=True,
@@ -64,6 +69,7 @@ request_post.add_argument(
 )
 request_post.add_argument(
     name='grade_id',
+    dest='sample_grade_id',
     location=structure_key_item,
     store_missing=False,
     required=True,
@@ -71,6 +77,7 @@ request_post.add_argument(
 )
 request_post.add_argument(
     name='summary',
+    dest='sample_quantity',
     location=structure_key_item,
     store_missing=False,
     required=True,
@@ -78,6 +85,7 @@ request_post.add_argument(
 )
 request_post.add_argument(
     name='note',
+    dest='sample_description',
     location=structure_key_item,
     store_missing=False,
     required=True,
@@ -85,16 +93,19 @@ request_post.add_argument(
 )
 request_post.add_argument(
     name='style',
+    dest='style_number',
     location=structure_key_item,
     store_missing=False,
 )
 request_post.add_argument(
     name='sku',
+    dest='sku_number',
     location=structure_key_item,
     store_missing=False,
 )
 request_post.add_argument(
     name='brand',
+    dest='sample_brand',
     location=structure_key_item,
     store_missing=False,
 )
@@ -126,56 +137,67 @@ request_put.add_argument(
 )
 request_put.add_argument(
     name='applicant_cid',
+    dest='submitter_cid',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
     name='applicant_uid',
+    dest='submitter_uid',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
     name='detection_cid',
+    dest='be_inspected_entity_cid',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
     name='type_detection',
+    dest='inspection_type',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
     name='type_test',
+    dest='test_type',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
     name='grade_id',
+    dest='sample_grade_id',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
     name='summary',
+    dest='sample_quantity',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
     name='note',
+    dest='sample_description',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
     name='style',
+    dest='style_number',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
     name='sku',
+    dest='sku_number',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
     name='brand',
+    dest='sample_brand',
     location=structure_key_item,
     store_missing=False,
 )

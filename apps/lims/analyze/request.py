@@ -24,6 +24,7 @@ request_post = request_parser_item.copy()
 
 request_post.add_argument(
     name='manner_id',
+    dest='test_method_id',
     location=structure_key_item,
     store_missing=False,
     required=True,
@@ -46,6 +47,7 @@ request_put = request_parser_item.copy()
 
 request_put.add_argument(
     name='manner_id',
+    dest='test_method_id',
     location=structure_key_item,
     store_missing=False,
 )
