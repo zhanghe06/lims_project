@@ -117,7 +117,7 @@ class MannerResource(Resource):
             abort(NotFound.code, message='更新失败', status=False)
 
         # 1. 清除历史
-        analyze_rows = get_analyze_rows(**{'manner_id': pk, 'status_delete': STATUS_DEL_NO})
+        analyze_rows = get_analyze_rows(**{'test_method_id': pk, 'status_delete': STATUS_DEL_NO})
         analyze_ids = [analyze_row.id for analyze_row in analyze_rows]
         if analyze_ids:
             result = delete_analyze(analyze_ids)
@@ -125,7 +125,7 @@ class MannerResource(Resource):
                 abort(BadRequest.code, message='删除失败', status=False)
         # 2. 新增更新
         for analyze_data in analyze_list_args:
-            analyze_data['manner_id'] = pk
+            analyze_data['test_method_id'] = pk
             result_analyze_id = add_analyze(analyze_data)
             if not result_analyze_id:
                 abort(BadRequest.code, message='创建失败', status=False)
@@ -179,17 +179,18 @@ class MannersResource(Resource):
         filter_parser = reqparse.RequestParser(bundle_errors=True)
         filter_parser.add_argument('page', type=int, default=DEFAULT_PAGE, location='args')
         filter_parser.add_argument('size', type=int, default=DEFAULT_SITE, location='args')
-        filter_parser.add_argument('standard_id', type=int, store_missing=False, location='args')
+        filter_parser.add_argument('standard_id', dest='protocol_id', type=int, store_missing=False, location='args')
         filter_parser_args = filter_parser.parse_args()
 
         if not filter_parser_args:
             abort(BadRequest.code, message='参数错误', status=False)
 
         filter_args = []
-        standard_id = filter_parser_args.pop('standard_id', 0)
+        standard_id = filter_parser_args.pop('protocol_id', 0)
+        # 获取关联数据
         if standard_id:
-            map_rows = get_map_standard_manner_rows(**{'standard_id': standard_id})
-            manner_ids = [map_row.manner_id for map_row in map_rows]
+            map_rows = get_map_standard_manner_rows(**{'protocol_id': standard_id})
+            manner_ids = [map_row.test_method_id for map_row in map_rows]
             filter_args.append(Manner.id.in_(manner_ids))
 
         filter_parser_args['status_delete'] = STATUS_DEL_NO
@@ -239,7 +240,7 @@ class MannersResource(Resource):
             abort(BadRequest.code, message='创建失败', status=False)
 
         for analyze_data in analyze_list_args:
-            analyze_data['manner_id'] = result_manner_id
+            analyze_data['test_method_id'] = result_manner_id
             result_analyze_id = add_analyze(analyze_data)
             if not result_analyze_id:
                 abort(BadRequest.code, message='创建失败', status=False)

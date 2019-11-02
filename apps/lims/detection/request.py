@@ -29,6 +29,7 @@ request_post.add_argument(
 )
 request_post.add_argument(
     name='specimen_item_id',
+    dest='sub_sample_id',
     location=structure_key_item,
     store_missing=False,
     required=True,
@@ -36,11 +37,13 @@ request_post.add_argument(
 )
 request_post.add_argument(
     name='standard_id',
+    dest='protocol_id',
     location=structure_key_item,
     store_missing=False,
 )
 request_post.add_argument(
     name='manner_id',
+    dest='test_method_id',
     type=int,
     action='append',
     location=structure_key_item,
@@ -50,6 +53,7 @@ request_post.add_argument(
 )
 request_post.add_argument(
     name='applicant_id',
+    dest='report_id',
     location=structure_key_item,
     store_missing=False,
 )
@@ -69,6 +73,7 @@ request_put.add_argument(
 )
 request_put.add_argument(
     name='specimen_item_id',
+    dest='sub_sample_id',
     location=structure_key_item,
     store_missing=False,
     required=True,
@@ -76,11 +81,13 @@ request_put.add_argument(
 )
 request_put.add_argument(
     name='standard_id',
+    dest='protocol_id',
     location=structure_key_item,
     store_missing=False,
 )
 request_put.add_argument(
     name='manner_id',
+    dest='test_method_id',
     type=int,
     action='append',
     location=structure_key_item,
@@ -88,6 +95,7 @@ request_put.add_argument(
 )
 request_put.add_argument(
     name='applicant_id',
+    dest='report_id',
     location=structure_key_item,
     store_missing=False,
 )

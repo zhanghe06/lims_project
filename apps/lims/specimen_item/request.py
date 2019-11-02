@@ -29,6 +29,7 @@ request_post.add_argument(
 )
 request_post.add_argument(
     name='applicant_id',
+    dest='report_id',
     location=structure_key_item,
     store_missing=False,
     required=True,
@@ -50,6 +51,7 @@ request_put.add_argument(
 )
 request_put.add_argument(
     name='applicant_id',
+    dest='report_id',
     location=structure_key_item,
     store_missing=False,
 )

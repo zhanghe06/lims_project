@@ -52,7 +52,7 @@ FAILURE_MSG = app.config['FAILURE_MSG']
 
 def _update_code(applicant_id):
     specimen_item_rows = get_specimen_item_rows(**{
-        'applicant_id': applicant_id,
+        'report_id': applicant_id,
         'status_delete': STATUS_DEL_NO,
     })
     specimen_item_ids = [item.id for item in specimen_item_rows]
@@ -169,7 +169,7 @@ class SpecimenItemsResource(Resource):
         filter_parser = reqparse.RequestParser(bundle_errors=True)
         filter_parser.add_argument('page', type=int, default=DEFAULT_PAGE, location='args')
         filter_parser.add_argument('size', type=int, default=DEFAULT_SITE, location='args')
-        filter_parser.add_argument('applicant_id', type=int, store_missing=False, location='args')
+        filter_parser.add_argument('applicant_id', dest='report_id', type=int, store_missing=False, location='args')
         filter_parser_args = filter_parser.parse_args()
 
         if not filter_parser_args:
@@ -212,8 +212,8 @@ class SpecimenItemsResource(Resource):
         if not result:
             abort(BadRequest.code, message='创建失败', status=False)
 
-        # TODO 更新编号
-        applicant_id = request_data['applicant_id']
+        # 更新编号
+        applicant_id = request_data['report_id']
         _update_code(applicant_id)
 
         success_msg = SUCCESS_MSG.copy()
@@ -253,8 +253,8 @@ class SpecimenItemsResource(Resource):
         if not result:
             abort(BadRequest.code, message='删除失败', status=False)
 
-        # TODO 更新编号
-        applicant_id = specimen_item_row.applicant_id
+        # 更新编号
+        applicant_id = specimen_item_row.report_id
         _update_code(applicant_id)
 
         success_msg = SUCCESS_MSG.copy()
@@ -305,7 +305,7 @@ class SpecimenCloneResource(Resource):
             abort(BadRequest.code, message='克隆子样失败', status=False)
         # 克隆分配
         detection_rows = get_detection_rows(**{
-            'specimen_item_id': request_data['id'],
+            'sub_sample_id': request_data['id'],
             'status_delete': STATUS_DEL_NO,
         })
         for detection_row in detection_rows:
@@ -313,13 +313,13 @@ class SpecimenCloneResource(Resource):
             detection_data.pop('id', 0)
             detection_data.pop('create_time', None)
             detection_data.pop('update_time', None)
-            detection_data['specimen_item_id'] = result_specimen_item_id
+            detection_data['sub_sample_id'] = result_specimen_item_id
             result = add_detection(detection_data)
             if not result:
                 abort(BadRequest.code, message='克隆分配失败', status=False)
 
         # TODO 更新编号
-        applicant_id = specimen_item_row.applicant_id
+        applicant_id = specimen_item_row.report_id
         _update_code(applicant_id)
 
         success_msg = SUCCESS_MSG.copy()

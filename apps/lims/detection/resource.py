@@ -155,7 +155,7 @@ class DetectionsResource(Resource):
         filter_parser = reqparse.RequestParser(bundle_errors=True)
         filter_parser.add_argument('page', type=int, default=DEFAULT_PAGE, location='args')
         filter_parser.add_argument('size', type=int, default=DEFAULT_SITE, location='args')
-        filter_parser.add_argument('specimen_item_id', type=int, store_missing=False, location='args')
+        filter_parser.add_argument('specimen_item_id', dest='sub_sample_id', type=int, store_missing=False, location='args')
         filter_parser_args = filter_parser.parse_args()
 
         if not filter_parser_args:
@@ -192,9 +192,9 @@ class DetectionsResource(Resource):
 
         request_data = request_item_args
 
-        manner_ids = request_data.pop('manner_id', [])  # 关联数据
+        manner_ids = request_data.pop('test_method_id', [])  # 关联数据
         for manner_id in manner_ids:
-            request_data['manner_id'] = manner_id
+            request_data['test_method_id'] = manner_id
             result = add_detection(request_data)
 
             if not result:
@@ -203,7 +203,7 @@ class DetectionsResource(Resource):
         # 更新子样分配状态
         if manner_ids:
             edit_specimen_item(
-                request_item_args['specimen_item_id'],
+                request_item_args['sub_sample_id'],
                 {'status_allocate': 1}
             )
         success_msg = SUCCESS_MSG.copy()
@@ -231,7 +231,7 @@ class DetectionsResource(Resource):
             abort(BadRequest.code, message='参数错误', status=False)
 
         # 是否存在(子样ID，并非分配ID)
-        data = get_specimen_item_row_by_id(request_item_args['specimen_item_id'])
+        data = get_specimen_item_row_by_id(request_item_args['sub_sample_id'])
 
         if not data:
             abort(NotFound.code, message='没有记录', status=False)
@@ -240,13 +240,13 @@ class DetectionsResource(Resource):
 
         # 更新数据
         request_data = request_item_args
-        manner_ids = request_data.pop('manner_id', [])  # 关联数据
+        manner_ids = request_data.pop('test_method_id', [])  # 关联数据
         # 关联数据（2步）
         result = False
         # 1. 清除历史
         detection_rows = get_detection_rows(
             **{
-                'specimen_item_id': request_data['specimen_item_id'],
+                'sub_sample_id': request_data['sub_sample_id'],
                 'status_delete': STATUS_DEL_NO,
             }
         )
@@ -257,7 +257,7 @@ class DetectionsResource(Resource):
                 abort(BadRequest.code, message='删除失败', status=False)
         # 2. 新增更新
         for manner_id in manner_ids:
-            request_data['manner_id'] = manner_id
+            request_data['test_method_id'] = manner_id
             result = add_detection(request_data)
 
             if not result:
@@ -309,7 +309,7 @@ class DetectionsResource(Resource):
         detection_row = get_detection_row_by_id(detection_ids[0])
         if not detection_row:
             abort(NotFound.code, message='没有记录', status=False)
-        specimen_item_id = detection_row.specimen_item_id
+        sub_sample_id = detection_row.sub_sample_id
 
         result = delete_detection(detection_ids)
 
@@ -318,7 +318,7 @@ class DetectionsResource(Resource):
 
         # 更新子样分配状态 todo
         detection_rows = get_detection_rows(**{
-            'specimen_item_id': specimen_item_id,
+            'sub_sample_id': sub_sample_id,
             'status_delete': STATUS_DEL_NO,
         })
         if detection_rows:
@@ -328,7 +328,7 @@ class DetectionsResource(Resource):
             status_allocate = 0
             allocate_time = None
         edit_specimen_item(
-            specimen_item_id,
+            sub_sample_id,
             {
                 'status_allocate': status_allocate,
                 'allocate_time': allocate_time,

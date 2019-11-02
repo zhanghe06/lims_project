@@ -220,7 +220,7 @@ CREATE TABLE `report_sub_sample` (
   `code` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '子样编号',
   `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '子样名称',
   `specimen_id` INT NOT NULL DEFAULT 0 COMMENT '样品ID',
-  `applicant_id` INT NOT NULL DEFAULT 0 COMMENT '申请ID',
+  `report_id` INT NOT NULL DEFAULT 0 COMMENT '申请ID',
   `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '备注',
   `status_allocate` TINYINT NOT NULL DEFAULT 0 COMMENT '分配状态（0:未分配,1:已分配）',
   `allocate_time` TIMESTAMP NULL COMMENT '分配时间',
@@ -230,7 +230,7 @@ CREATE TABLE `report_sub_sample` (
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY (`specimen_id`),
-  KEY (`applicant_id`)
+  KEY (`report_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='子样表';
 
 
@@ -239,19 +239,19 @@ CREATE TABLE `sample_tested_items` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `code` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '检测编号',
   `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '检测名称',
-  `specimen_item_id` INT NOT NULL DEFAULT 0 COMMENT '子样ID',
-  `standard_id` INT NOT NULL DEFAULT 0 COMMENT '标准ID',
-  `manner_id` INT NOT NULL DEFAULT 0 COMMENT '方法ID',
-  `applicant_id` INT NOT NULL DEFAULT 0 COMMENT '申请ID（冗余）',
+  `sub_sample_id` INT NOT NULL DEFAULT 0 COMMENT '子样ID',
+  `protocol_id` INT NOT NULL DEFAULT 0 COMMENT '标准ID',
+  `test_method_id` INT NOT NULL DEFAULT 0 COMMENT '方法ID',
+  `report_id` INT NOT NULL DEFAULT 0 COMMENT '申请ID（冗余）',
   `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '备注',
   `status_delete` TINYINT NOT NULL DEFAULT 0 COMMENT '删除状态（0:未删除,1:已删除）',
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY (`specimen_item_id`),
-  KEY (`manner_id`),
-  KEY (`applicant_id`)
+  KEY (`sub_sample_id`),
+  KEY (`test_method_id`),
+  KEY (`report_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='检测表';
 
 
@@ -288,17 +288,17 @@ CREATE TABLE `test_method` (
 DROP TABLE IF EXISTS `protocol_and_method_relation`;
 CREATE TABLE `protocol_and_method_relation` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `standard_id` INT NOT NULL DEFAULT 0 COMMENT '标准ID',
-  `manner_id` INT NOT NULL DEFAULT 0 COMMENT '方法ID',
+  `protocol_id` INT NOT NULL DEFAULT 0 COMMENT '标准ID',
+  `test_method_id` INT NOT NULL DEFAULT 0 COMMENT '方法ID',
   `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '方法名称',
   `status_delete` TINYINT NOT NULL DEFAULT 0 COMMENT '删除状态（0:未删除,1:已删除）',
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY (`standard_id`),
-  KEY (`manner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='标准方法对应表';
+  KEY (`protocol_id`),
+  KEY (`test_method_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='标准方法对应表(标准与方法多对多)';
 
 
 DROP TABLE IF EXISTS `test_property`;
