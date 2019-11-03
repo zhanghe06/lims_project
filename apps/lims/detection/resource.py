@@ -274,7 +274,7 @@ class DetectionsResource(Resource):
             status_allocate = 0
             allocate_time = None
         edit_specimen_item(
-            request_item_args['specimen_item_id'],
+            request_item_args['sub_sample_id'],
             {
                 'status_allocate': status_allocate,
                 'allocate_time': allocate_time,
