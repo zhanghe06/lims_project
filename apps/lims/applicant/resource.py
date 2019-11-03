@@ -206,7 +206,7 @@ class ApplicantsResource(Resource):
         dep_code = 'FZ01'
         index_code = '%06d' % (result % 1000000)
         code = 'NZJ(%s)%s-%s' % (year_code, dep_code, index_code)
-        edit_applicant(result, {'code': code})
+        edit_applicant(result, {'report_no': code})
         return make_response(jsonify(success_msg), 200)
 
     def delete(self):
