@@ -189,7 +189,7 @@ class MannersResource(Resource):
         standard_id = filter_parser_args.pop('protocol_id', 0)
         # 获取关联数据
         if standard_id:
-            map_rows = get_map_standard_manner_rows(**{'protocol_id': standard_id})
+            map_rows = get_map_standard_manner_rows(**{'protocol_id': standard_id, 'status_delete': STATUS_DEL_NO})
             manner_ids = [map_row.test_method_id for map_row in map_rows]
             filter_args.append(Manner.id.in_(manner_ids))
 
