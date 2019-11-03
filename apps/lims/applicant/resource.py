@@ -154,7 +154,7 @@ class ApplicantsResource(Resource):
             abort(BadRequest.code, message='参数错误', status=False)
 
         filter_args = []
-        code = filter_parser_args.pop('code', '')
+        code = filter_parser_args.pop('report_no', '')
         if code:
             filter_args.append(Applicant.report_no.like('%%%s%%' % code))
 

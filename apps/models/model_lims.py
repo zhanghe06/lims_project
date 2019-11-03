@@ -32,7 +32,7 @@ class Company(Base):
     __tablename__ = 'company'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(100), nullable=False, server_default=text("''"))
+    name = Column(String(100), nullable=False, unique=True, server_default=text("''"))
     address = Column(String(100), nullable=False, server_default=text("''"))
     site = Column(String(100), nullable=False, server_default=text("''"))
     tel = Column(String(100), nullable=False, server_default=text("''"))
