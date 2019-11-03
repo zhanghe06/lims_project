@@ -97,10 +97,10 @@ class StandardResource(Resource):
 
         # 更新数据
         request_data = request_item_args
-        manner_ids = request_data.pop('manner_id', [])  # 关联数据
+        manner_ids = request_data.pop('test_method_id', [])  # 关联数据
         # 关联数据（2步）
         # 1. 清除历史
-        map_rows = get_map_standard_manner_rows(**{'standard_id': pk, 'status_delete': STATUS_DEL_NO})
+        map_rows = get_map_standard_manner_rows(**{'protocol_id': pk, 'status_delete': STATUS_DEL_NO})
         map_ids = [map_row.id for map_row in map_rows]
         if map_ids:
             result = delete_map_standard_manner(map_ids)
@@ -109,8 +109,8 @@ class StandardResource(Resource):
         # 2. 新增更新
         for manner_id in manner_ids:
             map_data = {
-                'standard_id': pk,
-                'manner_id': manner_id,
+                'protocol_id': pk,
+                'test_method_id': manner_id,
             }
             result_map_id = add_map_standard_manner(map_data)
             if not result_map_id:
@@ -206,7 +206,7 @@ class StandardsResource(Resource):
             abort(BadRequest.code, message='参数错误', status=False)
 
         request_data = request_item_args
-        manner_ids = request_data.pop('manner_id', [])  # 关联数据
+        manner_ids = request_data.pop('test_method_id', [])  # 关联数据
         result_standard_id = add_standard(request_data)
 
         if not result_standard_id:
@@ -214,8 +214,8 @@ class StandardsResource(Resource):
         # 关联数据
         for manner_id in manner_ids:
             map_data = {
-                'standard_id': result_standard_id,
-                'manner_id': manner_id,
+                'protocol_id': result_standard_id,
+                'test_method_id': manner_id,
             }
             result_map_id = add_map_standard_manner(map_data)
             if not result_map_id:

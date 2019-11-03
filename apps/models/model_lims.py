@@ -246,7 +246,7 @@ class TestMethod(Base):
     __tablename__ = 'test_method'
 
     id = Column(Integer, primary_key=True)
-    code = Column(String(100), nullable=False, server_default=text("''"))
+    code = Column(String(100), nullable=False, unique=True, server_default=text("''"))
     name = Column(String(100), nullable=False, server_default=text("''"))
     condition = Column(String(100), nullable=False, server_default=text("''"))
     note = Column(String(256), nullable=False, server_default=text("''"))
