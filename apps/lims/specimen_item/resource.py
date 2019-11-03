@@ -57,7 +57,7 @@ def _update_code(applicant_id):
     })
     specimen_item_ids = [item.id for item in specimen_item_rows]
     code_list = gen_code_uppercase(m=len(specimen_item_ids))
-    code_list.reverse()
+    # code_list.reverse()
     for i, specimen_item_id in enumerate(specimen_item_ids):
         edit_specimen_item(specimen_item_id, {'code': code_list[i]})
 
