@@ -1,5 +1,5 @@
 --
--- Current Database: `lims_project`
+-- Current Database: `lims_project_dev`
 --
 
 USE `lims_project_dev`;

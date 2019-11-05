@@ -13,7 +13,7 @@ from __future__ import unicode_literals
 from flask import jsonify, make_response
 from flask_restful import Resource, marshal, reqparse, abort
 from werkzeug.exceptions import NotFound, BadRequest
-
+from sqlalchemy.sql.operators import or_
 from apps import app
 from apps.lims.manner.api import (
     get_manner_row_by_id,
@@ -180,12 +180,18 @@ class MannersResource(Resource):
         filter_parser.add_argument('page', type=int, default=DEFAULT_PAGE, location='args')
         filter_parser.add_argument('size', type=int, default=DEFAULT_SITE, location='args')
         filter_parser.add_argument('standard_id', dest='protocol_id', type=int, store_missing=False, location='args')
+        filter_parser.add_argument('keywords', store_missing=False, location='args')
         filter_parser_args = filter_parser.parse_args()
 
         if not filter_parser_args:
             abort(BadRequest.code, message='参数错误', status=False)
 
         filter_args = []
+        # 模糊搜索
+        keywords = filter_parser_args.pop('keywords', '')
+        if keywords:
+            filter_args.append(or_(Manner.code.like('%%%s%%' % keywords), Manner.name.like('%%%s%%' % keywords)))
+
         standard_id = filter_parser_args.pop('protocol_id', 0)
         # 获取关联数据
         if standard_id:

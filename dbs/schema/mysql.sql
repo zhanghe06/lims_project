@@ -1,8 +1,8 @@
 --
--- Current Database: `lims_project`
+-- Current Database: `lims_project_dev`
 --
 
--- DROP DATABASE IF EXISTS `lims_project`;
+-- DROP DATABASE IF EXISTS `lims_project_dev`;
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `lims_project_dev` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 
