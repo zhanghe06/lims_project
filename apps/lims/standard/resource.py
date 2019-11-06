@@ -12,20 +12,21 @@ from __future__ import unicode_literals
 
 from flask import jsonify, make_response
 from flask_restful import Resource, marshal, reqparse, abort
+from sqlalchemy import or_
 from werkzeug.exceptions import NotFound, BadRequest
 
 from apps import app
+from apps.lims.map_standard_manner.api import (
+    add_map_standard_manner,
+    get_map_standard_manner_rows,
+    delete_map_standard_manner,
+)
 from apps.lims.standard.api import (
     get_standard_row_by_id,
     delete_standard,
     get_standard_pagination,
     add_standard,
     edit_standard,
-)
-from apps.lims.map_standard_manner.api import (
-    add_map_standard_manner,
-    get_map_standard_manner_rows,
-    delete_map_standard_manner,
 )
 from apps.lims.standard.request import (
     structure_key_item,
@@ -36,6 +37,7 @@ from apps.lims.standard.request import (
 )
 from apps.lims.standard.response import fields_item
 from apps.maps.status_delete import STATUS_DEL_OK, STATUS_DEL_NO
+from apps.models.model_lims import Protocol as Standard
 
 DEFAULT_PAGE = app.config['DEFAULT_PAGE']
 DEFAULT_SITE = app.config['DEFAULT_SITE']
@@ -169,13 +171,29 @@ class StandardsResource(Resource):
         filter_parser = reqparse.RequestParser(bundle_errors=True)
         filter_parser.add_argument('page', type=int, default=DEFAULT_PAGE, location='args')
         filter_parser.add_argument('size', type=int, default=DEFAULT_SITE, location='args')
+        filter_parser.add_argument('keywords', store_missing=False, location='args')
         filter_parser_args = filter_parser.parse_args()
 
         if not filter_parser_args:
             abort(BadRequest.code, message='参数错误', status=False)
 
+        filter_args = []
+        # 模糊搜索
+        keywords = filter_parser_args.pop('keywords', '')
+        if keywords:
+            filter_args.append(
+                or_(
+                    Standard.code.like('%%%s%%' % keywords),
+                    Standard.name.like('%%%s%%' % keywords),
+                    Standard.item_name.like('%%%s%%' % keywords)
+                )
+            )
+
+        filter_parser_args['status_delete'] = STATUS_DEL_NO
         pagination_obj = get_standard_pagination(
-            status_delete=STATUS_DEL_NO,
+            filter_parser_args.pop('page'),
+            filter_parser_args.pop('size'),
+            *filter_args,
             **filter_parser_args
         )
 

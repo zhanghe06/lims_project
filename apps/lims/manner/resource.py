@@ -12,23 +12,21 @@ from __future__ import unicode_literals
 
 from flask import jsonify, make_response
 from flask_restful import Resource, marshal, reqparse, abort
+from sqlalchemy import or_
 from werkzeug.exceptions import NotFound, BadRequest
-from sqlalchemy.sql.operators import or_
+
 from apps import app
+from apps.lims.analyze.api import (
+    delete_analyze,
+    add_analyze,
+    get_analyze_rows,
+)
 from apps.lims.manner.api import (
     get_manner_row_by_id,
     delete_manner,
     get_manner_pagination,
     add_manner,
     edit_manner,
-)
-from apps.lims.analyze.api import (
-    get_analyze_row_by_id,
-    delete_analyze,
-    get_analyze_pagination,
-    add_analyze,
-    edit_analyze,
-    get_analyze_rows,
 )
 from apps.lims.manner.request import (
     structure_key_item,
@@ -37,13 +35,10 @@ from apps.lims.manner.request import (
     request_put,
     request_delete,
 )
-from apps.lims.map_standard_manner.api import (
-    add_map_standard_manner,
-    get_map_standard_manner_row,
-    get_map_standard_manner_rows,
-    delete_map_standard_manner,
-)
 from apps.lims.manner.response import fields_item
+from apps.lims.map_standard_manner.api import (
+    get_map_standard_manner_rows,
+)
 from apps.maps.status_delete import STATUS_DEL_OK, STATUS_DEL_NO
 from apps.models.model_lims import TestMethod as Manner
 
