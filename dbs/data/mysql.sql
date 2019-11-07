@@ -24,11 +24,11 @@ INSERT INTO `company` VALUES (3, '客户1', '', '', '', '', '', 2, '', 0, 0, NUL
 INSERT INTO `company` VALUES (4, '客户2', '', '', '', '', '', 2, '', 0, 0, NULL, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
 
 -- 联系人
-TRUNCATE TABLE `report_contact`;
-INSERT INTO `report_contact` VALUES (1, 1, '小李', '', '', '', '', 0, 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
-INSERT INTO `report_contact` VALUES (2, 1, '小王', '', '', '', '', 0, 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
-INSERT INTO `report_contact` VALUES (3, 2, '小张', '', '', '', '', 0, 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
-INSERT INTO `report_contact` VALUES (4, 2, '小明', '', '', '', '', 0, 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
+TRUNCATE TABLE `company_contact`;
+INSERT INTO `company_contact` VALUES (1, 1, '小李', '', '', '', '', 0, 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
+INSERT INTO `company_contact` VALUES (2, 1, '小王', '', '', '', '', 0, 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
+INSERT INTO `company_contact` VALUES (3, 2, '小张', '', '', '', '', 0, 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
+INSERT INTO `company_contact` VALUES (4, 2, '小明', '', '', '', '', 0, 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
 
 -- 等级
 TRUNCATE TABLE `sample_grade`;

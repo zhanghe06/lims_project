@@ -132,8 +132,8 @@ class ProtocolAndMethodRelation(Base):
     update_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"))
 
 
-class ReportContact(Base):
-    __tablename__ = 'report_contact'
+class CompanyContact(Base):
+    __tablename__ = 'company_contact'
 
     id = Column(Integer, primary_key=True)
     cid = Column(Integer, nullable=False, index=True, server_default=text("'0'"))

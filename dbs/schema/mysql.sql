@@ -141,8 +141,8 @@ CREATE TABLE `company` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='单位表';
 
 
-DROP TABLE IF EXISTS `report_contact`;
-CREATE TABLE `report_contact` (
+DROP TABLE IF EXISTS `company_contact`;
+CREATE TABLE `company_contact` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `cid` INT NOT NULL DEFAULT 0 COMMENT '单位ID',
   `name` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '姓名',
