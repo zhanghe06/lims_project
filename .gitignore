@@ -102,3 +102,12 @@ ENV/
 
 .DS_Store
 .idea/
+
+# MariaDB
+docker/MariaDB/backup/
+docker/MariaDB/data/
+docker/MariaDB/log/
+
+# Nginx
+docker/Nginx/logs/
+docker/Nginx/dist/

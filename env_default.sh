@@ -7,3 +7,4 @@ export PYTHONPATH=${PWD}
 export PYTHONIOENCODING=utf-8
 #export PYTHONUNBUFFERED=1
 export MODE=default
+export PROJECT_PATH=${PWD}
