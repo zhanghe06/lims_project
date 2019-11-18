@@ -276,7 +276,7 @@ CREATE TABLE `test_method` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `code` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '方法编号',
   `name` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '方法名称',
-  `condition` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '条件',
+  `test_condition` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '条件',
   `note` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '备注',
   `status_delete` TINYINT NOT NULL DEFAULT 0 COMMENT '删除状态（0:未删除,1:已删除）',
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
