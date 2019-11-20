@@ -39,17 +39,17 @@ INSERT INTO `sample_grade` VALUES (4, 'D级', '', 0, NULL, '2018-03-14 10:00:00'
 
 -- 标准
 TRUNCATE TABLE `protocol`;
-INSERT INTO `protocol` VALUES (1, 'GB-2016', '标准1', '标准方法1', '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
-INSERT INTO `protocol` VALUES (2, 'GB-2017', '标准2', '标准方法2', '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
-INSERT INTO `protocol` VALUES (3, 'GB-2018', '标准3', '标准方法3', '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
-INSERT INTO `protocol` VALUES (4, 'GB-2019', '标准4', '标准方法4', '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
+INSERT INTO `protocol` VALUES (1, 'GB-2016', '标准1', '标准方法1', '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00', '');
+INSERT INTO `protocol` VALUES (2, 'GB-2017', '标准2', '标准方法2', '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00', '');
+INSERT INTO `protocol` VALUES (3, 'GB-2018', '标准3', '标准方法3', '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00', '');
+INSERT INTO `protocol` VALUES (4, 'GB-2019', '标准4', '标准方法4', '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00', '');
 
 -- 方法
 TRUNCATE TABLE `test_method`;
-INSERT INTO `test_method` VALUES (1, 'GB-2016', '方法1', '', '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
-INSERT INTO `test_method` VALUES (2, 'GB-2017', '方法2', '', '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
-INSERT INTO `test_method` VALUES (3, 'GB-2018', '方法3', '', '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
-INSERT INTO `test_method` VALUES (4, 'GB-2019', '方法4', '', '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
+INSERT INTO `test_method` VALUES (1, 'GB-2016', '方法1', '', '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00', '');
+INSERT INTO `test_method` VALUES (2, 'GB-2017', '方法2', '', '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00', '');
+INSERT INTO `test_method` VALUES (3, 'GB-2018', '方法3', '', '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00', '');
+INSERT INTO `test_method` VALUES (4, 'GB-2019', '方法4', '', '', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00', '');
 
 -- 标准方法关系
 TRUNCATE TABLE `protocol_and_method_relation`;
@@ -67,7 +67,7 @@ INSERT INTO `test_property` VALUES (4, 2, '起球', 2, 0, NULL, '2018-03-14 10:0
 
 -- 申请
 TRUNCATE TABLE `report_info`;
-INSERT INTO `report_info` VALUES (1, '委托编号1', 1, 1, 1, 3, 1, 2, 1, '衣裤1套', '', '', '', '', 7, '2019-10-10', '2019-10-17', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00');
+INSERT INTO `report_info` VALUES (1, '委托编号1', 1, 1, 1, 3, 1, 2, 1, '衣裤1套', '', '', '', '', 7, '2019-10-10', '2019-10-17', 0, NULL, '2018-03-14 10:00:00', '2018-03-14 10:00:00', 0);
 
 -- 子样
 TRUNCATE TABLE `report_sub_sample`;

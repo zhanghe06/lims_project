@@ -183,6 +183,7 @@ CREATE TABLE `report_info` (
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `synchronized` int(1) DEFAULT 0 COMMENT '是否同步,0未同步，1同步',
   PRIMARY KEY (`id`),
   KEY (`receiver_uid`),
   KEY (`submitter_cid`),
@@ -267,6 +268,7 @@ CREATE TABLE `protocol` (
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `sp_code` varchar(45) DEFAULT '' COMMENT 'Lims中测试方案主编码SP_CODE',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='标准表';
 
@@ -282,6 +284,7 @@ CREATE TABLE `test_method` (
   `delete_time` TIMESTAMP NULL COMMENT '删除时间',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `TestCodeMethodCode` varchar(45) DEFAULT '' COMMENT 'LIMS中40014223-40010150 testcode vs method',
   PRIMARY KEY (`id`),
   UNIQUE (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='方法表';

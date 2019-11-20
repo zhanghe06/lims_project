@@ -48,6 +48,23 @@ class Company(Base):
     update_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"))
 
 
+class CompanyContact(Base):
+    __tablename__ = 'company_contact'
+
+    id = Column(Integer, primary_key=True)
+    cid = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
+    name = Column(String(20), nullable=False, server_default=text("''"))
+    salutation = Column(String(20), nullable=False, server_default=text("''"))
+    mobile = Column(String(20), nullable=False, server_default=text("''"))
+    email = Column(String(60), nullable=False, server_default=text("''"))
+    note = Column(String(256), nullable=False, server_default=text("''"))
+    status_default = Column(Integer, nullable=False, server_default=text("'0'"))
+    status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
+    delete_time = Column(DateTime)
+    create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP"))
+    update_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"))
+
+
 class Department(Base):
     __tablename__ = 'department'
 
@@ -117,6 +134,7 @@ class Protocol(Base):
     delete_time = Column(DateTime)
     create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP"))
     update_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"))
+    sp_code = Column(String(45), server_default=text("''"))
 
 
 class ProtocolAndMethodRelation(Base):
@@ -126,23 +144,6 @@ class ProtocolAndMethodRelation(Base):
     protocol_id = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
     test_method_id = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
     name = Column(String(100), nullable=False, server_default=text("''"))
-    status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
-    delete_time = Column(DateTime)
-    create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP"))
-    update_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"))
-
-
-class CompanyContact(Base):
-    __tablename__ = 'company_contact'
-
-    id = Column(Integer, primary_key=True)
-    cid = Column(Integer, nullable=False, index=True, server_default=text("'0'"))
-    name = Column(String(20), nullable=False, server_default=text("''"))
-    salutation = Column(String(20), nullable=False, server_default=text("''"))
-    mobile = Column(String(20), nullable=False, server_default=text("''"))
-    email = Column(String(60), nullable=False, server_default=text("''"))
-    note = Column(String(256), nullable=False, server_default=text("''"))
-    status_default = Column(Integer, nullable=False, server_default=text("'0'"))
     status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
     delete_time = Column(DateTime)
     create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP"))
@@ -173,6 +174,7 @@ class ReportInfo(Base):
     delete_time = Column(DateTime)
     create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP"))
     update_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"))
+    synchronized = Column(Integer, server_default=text("'0'"))
 
 
 class ReportSample(Base):
@@ -248,12 +250,13 @@ class TestMethod(Base):
     id = Column(Integer, primary_key=True)
     code = Column(String(100), nullable=False, unique=True, server_default=text("''"))
     name = Column(String(100), nullable=False, server_default=text("''"))
-    condition = Column(String(100), nullable=False, server_default=text("''"))
+    test_condition = Column(String(100), nullable=False, server_default=text("''"))
     note = Column(String(256), nullable=False, server_default=text("''"))
     status_delete = Column(Integer, nullable=False, server_default=text("'0'"))
     delete_time = Column(DateTime)
     create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP"))
     update_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"))
+    TestCodeMethodCode = Column(String(45), server_default=text("''"))
 
 
 class TestProperty(Base):
