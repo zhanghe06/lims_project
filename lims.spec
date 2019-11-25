@@ -12,11 +12,26 @@
 # 后续只需
 # pyinstaller lims.spec
 
+# DB_MYSQL = {
+#     'host': '127.0.0.1',
+#     'user': 'root',
+#     'passwd': 'Bb111111',
+#     'port': 3306,
+#     'db': 'lims_project_dev'
+# }
+# DB_MYSQL = {
+#     'host': '192.168.4.1',
+#     'user': 'root',
+#     'passwd': '123456',
+#     'port': 3306,
+#     'db': 'lims_project_dev'
+# }
+
 
 block_cipher = None
 
 
-a = Analysis(['run_apps.py'],
+a = Analysis(['run.py'],
              pathex=['%USERPROFILE%\\lims_project'],
              binaries=[],
              datas=[],

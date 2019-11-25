@@ -38,6 +38,7 @@ request_post.add_argument(
 )
 request_post.add_argument(
     name='condition',
+    dest='test_condition',
     location=structure_key_item,
     store_missing=False,
 )
@@ -69,6 +70,7 @@ request_put.add_argument(
 )
 request_put.add_argument(
     name='condition',
+    dest='test_condition',
     location=structure_key_item,
     store_missing=False,
 )
