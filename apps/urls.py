@@ -40,7 +40,7 @@ def append_request_id(response):
             'res_status_code': response.status_code,
         }
         signal_operation_log.send(app, **operation_log)
-    return response
+    return response  # 必须返回response
 
 
 @app.route('/', methods=['GET', 'POST', 'OPTIONS'])

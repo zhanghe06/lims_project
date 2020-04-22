@@ -38,6 +38,9 @@ request_post.add_argument(
 request_post.add_argument(
     name='standard_id',
     dest='protocol_id',
+    type=int,
+    ignore=True,
+    default=0,
     location=structure_key_item,
     store_missing=False,
 )
@@ -82,6 +85,9 @@ request_put.add_argument(
 request_put.add_argument(
     name='standard_id',
     dest='protocol_id',
+    type=int,
+    ignore=True,
+    default=0,
     location=structure_key_item,
     store_missing=False,
 )
